@@ -1,0 +1,46 @@
+# =========================
+# Python / Environment
+# =========================
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+env/
+
+# =========================
+# Jupyter Notebooks
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Build / Packaging
+# =========================
+build/
+dist/
+*.egg-info/
+*.egg
+
+# =========================
+# IDEs / Editors
+# =========================
+.vscode/
+*.code-workspace
+
+# =========================
+# OS Generated Files (macOS)
+# =========================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# =========================
+# Project Specific (Kronos)
+# =========================
+kronos/kronos_Update.py
+kronos/kronos_init.py
+kronos/app.py
+Results/
