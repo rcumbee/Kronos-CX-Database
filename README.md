@@ -2,10 +2,6 @@ This is the Kronos CX Database, also found at physast.uga.edu/ugacxdb/
 
 ```
 The directory structure is as follows: <br>
-├── DOCS <br>
-│   └── Publications <br>
-│       ├── MCLZ <br>
-│       └── Others <br>
 ├── elements.dat <br>
 ├── kronos_DB2.csv <br>
 ├── PrintFileList.ipynb <br>
@@ -20,7 +16,6 @@ The directory structure is as follows: <br>
 │   │       │       │   ├── al11+co_sec_mclz.cs <br>
 │   │       │       │   └── radrathe.dat <br>
 ├── README.md <br>
-└── Update_CS_References.ipynb <br>
 ```                
 Energy units: eV/u
 cross-sections in (10^-16 cm^2)
