@@ -1,0 +1,20 @@
+ion=Si
+charge=13
+atom=H
+Si^13+ + H -> Si^12+ + H^+ triplets
+
+name=Patrick Mullen
+initials=PDM
+Executing...
+
+	cp si13.nist.in si13.nist.in.bak
+
+	degen -d 3 < si13.nist.in.bak > si13.nist.in
+
+	lzdata < si13.nist.in -I Si -Z 13 -A H -H  -t > si13+h_sec_mclz_trip.ax
+	lzmcro -t < si13+h_sec_mclz_trip.ax > si13+h_sec_mclz_trip.xs
+Execution time: 24232 seconds
+	mknlrescs < si13+h_sec_mclz_trip.xs -I Si -Z 13 -A H -N "Patrick Mullen" -L PDM > si13+h_sec_mclz_trip.cs
+	mv si13.nist.in.bak si13.nist.in
+
+	mknrescs < si13+h_sec_mclz_trip.cs > si13+h_sec_mclz_trip_nres.cs
