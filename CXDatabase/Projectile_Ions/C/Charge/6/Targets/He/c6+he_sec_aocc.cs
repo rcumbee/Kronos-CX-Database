@@ -1,8 +1,8 @@
-# Fritsch, Wolfgang, and Chii Dong Lin. 
-# "The semiclassical close-coupling description of atomic collisions: 
-# Recent developments and results." Physics Reports 202.1 (1991): 1-97.
-#AOCC Calculations
-#Prepared by R. Cumbee May 2016
+# Prepared by R. Cumbee May 2016
+# Single electron capture cross sections, nl state-selective 
+# C^6+ + He -> C^5+ + He^+ 
+# Method=AOCC 
+# Fritsch, Wolfgang, and Chii Dong Lin. Physics Reports, 202,1-2, 1991; DOI: https://doi.org/10.1016/0370-1573(91)90008-A.
 # ----------------------------------------------------------------------------
 # Energy		Cross sections (10^-16 cm^2)
 # (eV/u)	4f(2F)	4d(2D)	4p(2P)	4s(2S)	3d(2D)	3p(2P)	3s(2S)	2p(2P)	2s(2S)	1s(2S)	Total	

@@ -1,8 +1,8 @@
-# QMOCC calculations by Jeff Nolte
-# To Be Submitted
-#
-#
 # Prepared by Renata Cumbee 05/11/2016
+# Single electron capture cross sections, nl state-selective 
+# O^7+ + H -> O^6+ + H^+ 
+# Method=QMOCC
+# J. Nolte, Dissertation UGA, 2011
 # ----------------------------------------------------------------------------
 # Energy		Cross sections (10^-16 cm^2)
 # (eV/u)    1s(1S)    1s(3S)    2s(1S)    2s(3S)    2p(1P)    2p(3P)    3s(1S)    3s(3S)    3p(1P)    3p(3P)    3d(1D)    3d(3D)    4s(1S)    4s(3S)    4p(1P)    4p(3P)    4d(1D)    4d(3D)    4f(1F)    4f(3F)    5s(1S)    5s(3S)    5p(1P)    5p(3P)    5d(1D)    5d(3D)    5f(1F)    5f(3F)    5g(1G)    5g(3G)    6s(1S)    6s(3S)    6p(1P)    6p(3P)    6d(1D)    6d(3D)    6f(1F)    6f(3F)    6g(1G)    6g(3G)    6h(1H)    6h(3H) Total

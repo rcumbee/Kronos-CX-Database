@@ -1,8 +1,8 @@
-# AOCC Cross Sections by Ling Liu: 1 keV/u -200 keV/u SEC cross sections, nl state-selective
-# Ne^10+ + H -> Ne^(9)+ + H+
-# See; Cumbee, R. S., Liu, L., Lyons, D., Schultz, D. R., Stancil, P. C., Wang, J. G., & Ali, R. (2016).
-# Ne X X-ray Emission due to Charge Exchange in M82. Monthly Notices of the Royal Astronomical Society, 458(4), 3554-3560.
-# Prepared by R. Cumbee May 12,2016
+# Prepared by R. Cumbee May 12,2016 (cross-sections calculated by L. Liu)
+# SEC cross sections, nl state-selective
+# Ne^10+ + H -> Ne^(9)+ + H+ 
+# Method=AOCC 
+# Cumbee, R. S. et. al, MNARAS 458(4), 3554-3560 (2016); doi: https://doi.org/10.1093/mnras/stw527
 # ------------------------------------------------
 # Energy    Cross sections (10^-16 cm^2) n,l
 # (eV/u)  1s(2S)  2s(2S)    2p(2P)    3s(2S)    3p(2P)    3d(2D)    4s(2S)    4p(2P)    4d(2D)    4f(2F)    5s(2S)    5p(2P)    5d(2D)    5f(2F)    5g(2G)    6s(2S)    6p(2P)    6d(2D)    6f(2F)    6g(2G)    6h(2H)    7s(2S)    7p(2P)    7d(2D)    7f(2F)    7g(2G)    7h(2H)    7i(2I)    8s(2S)    8p(2P)    8d(2D)    8f(2F)    8g(2G)    8h(2H)    8i(2I)    8k(2K)  Total

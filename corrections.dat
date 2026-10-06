@@ -1,0 +1,36 @@
+# corrections.dat -- corrections applied to this Kronos v3 database (newest first).
+# Each entry: date, what changed and why, source, files.
+
+2026-10-05  Cl16+ + H removed (user)
+----------------------------------------------------------------------------------------------------
+CXDatabase/Projectile_Ions/Cl/Charge/16 (Targets/H: cl16+h_sec_mclz.cs "RCumbee et al. 2017, to be submitted", cl16.nist.in,
+radrathe.dat) removed: the MCLZ totals are 1.68-1.76x our ICR MCLZ result at all energies, and Kronos v3.1 had already dropped
+this system. Archived in DATA/Working/Theory/Kronos_v3_review/kronos_v3_cl16h_original_20261005-235215.tgz.
+
+2026-10-05  C5+ + H MOCC duplicate removed (user)
+----------------------------------------------------------------------------------------------------
+CXDatabase/Projectile_Ions/C/Charge/5/Targets/H/c5+h_sec_mocc.cs removed: identical to c5+h_sec_qmocc.cs in the same folder
+(Nolte et al. 2012); the published index (kronos_DB_Published.csv) and CX_Literature label these data QMOCC. Original MOCC
+file archived in DATA/Working/Theory/Kronos_v3_review/kronos_v3_c5h_mocc_original_20261005-221827.tgz.
+
+2026-10-05  C5+ + H MOCC replaced by the corrected QMOCC data (user)
+----------------------------------------------------------------------------------------------------
+CXDatabase/Projectile_Ions/C/Charge/5/Targets/H/c5+h_sec_mocc.cs was a duplicate of the C5+ + H QMOCC data (same values,
+uncorrected header). Replaced by a copy of the corrected GitHub file c5+h_sec_qmocc.cs (Nolte et al. 2012, J. Phys. B 45,
+245202), kept under the MOCC file name. Original archived in DATA/Working/Theory/Kronos_v3_review/kronos_v3_c5h_mocc_original_20261005-221827.tgz.
+
+2026-10-05  Non-MCLZ files replaced by the corrected versions from the cxdatabase GitHub repository
+----------------------------------------------------------------------------------------------------
+Source: DATA/Github/cxdatabase/Projectile_Ions (same file names; corrections documented in its changes.dat).
+MCLZ files not changed. C5+ + H MOCC (duplicate of the QMOCC data) not changed. Originals archived in
+DATA/Working/Theory/Kronos_v3_review/kronos_v3_nonmclz_originals_20261005-221622.tgz.
+  CXDatabase/Projectile_Ions/N/Charge/6/Targets/H/n6+h_sec_qmocc.cs: header (citation) corrected; Wu et al. 2011 PRA 84, 022711
+  CXDatabase/Projectile_Ions/O/Charge/7/Targets/H/o7+h_sec_qmocc.cs: header (citation) corrected; Nolte, Dissertation UGA 2011
+  CXDatabase/Projectile_Ions/Ne/Charge/10/Targets/H/ne10+h_sec_aocc.cs: header (citation) corrected; Cumbee et al. 2016 MNRAS 458, 3554
+  CXDatabase/Projectile_Ions/Ne/Charge/10/Targets/H/ne10+h_sec_ctmc.cs: header (citation) corrected; Cumbee et al. 2016 MNRAS 458, 3554
+  CXDatabase/Projectile_Ions/C/Charge/6/Targets/He/c6+he_sec_aocc.cs: header (citation) corrected; Fritsch & Lin 1991 Phys. Rep. 202
+  CXDatabase/Projectile_Ions/C/Charge/5/Targets/H/c5+h_sec_qmocc.cs: header (citation) corrected; Nolte et al. 2012 JPB 45, 245202
+  CXDatabase/Projectile_Ions/N/Charge/7/Targets/H/n7+h_sec_mocc.cs: 37 transcription errors corrected (Harel et al. 1998 Table VII: 5p/5d swapped, 5f x10 at 4000 eV/u, 7i in cm^2, digit typos); totals unchanged
+  CXDatabase/Projectile_Ions/O/Charge/8/Targets/H/o8+h_sec_rcmd.cs: Janev et al. 1993 fits re-evaluated with the printed coefficients (6g typo a4 = 3.531e1); total new/old 0.845-1.000; units line added (10^-16 cm^2)
+  CXDatabase/Projectile_Ions/C/Charge/6/Targets/H/c6+h_sec_rcmd.cs: Janev et al. 1993 fits re-evaluated with the printed coefficients (7i typo a2 = 2.483e1); total new/old 0.988-1.000
+
