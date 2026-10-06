@@ -1,0 +1,66 @@
+kronos v3.0
+
+2/7/17 PDM:
+	Major Overhaul of Code:
+		-Eliminated over 1000 lines of code
+		-Used list comprehension when possible
+		-Eliminated initmaker_h.py
+		-Eliminated initmaker_he.py
+		-Eliminated zeus_h.py
+		-Eliminated zeus_he.py
+		-Only collision type sensitive software now is radcash and radcashe
+		-Distribution Functions handled by Kronos 
+			-Choices: (lowe, lowemod, separable, SL1, stat)
+			-Does not require *lowe.cs or *stat.cs files, etc.
+		-Added comments
+		-TeX Table outputs table comments with Method (and distro if relevant)
+		-kronos.py simplified
+		-bin folder is now working directory
+		-README updated
+		-Added GNU License
+		-Edited QMOCC, MOCC, AOCC, CTMC files to proper format
+		-All nl(S)-resolved cross sections (bare or non-bare) must follow same file format
+		-All n-resolved cross sections must follow same file format
+
+2/2/17 RSC:
+	inithmaker_h.py: 
+		-now only uses non-normalized cross-sections
+
+	initmaker_he.py: 
+		-now only uses non-normalized cross-sections 
+
+	radcash.f: 
+		-now only reads in non-normalized cross-sections
+
+	radcashe.f: 
+		-now only reads in non-normalized cross-sections 
+
+1/7/2017 RSC:
+	initmaker_he.py: 
+		-produced normalized and non-normalized inithe files.  
+		-Added ascentcrossnorm with ascentcross and CROSSSECSnorm with CROSSSECS
+
+	radcas_he.f: 	
+		-Edited to not normalize the spectrum or ratios. 
+		-Edited to calculate the H, H’, R, G, G’ ratios in ratios_method.dat
+
+	gauss_.f
+		-Removed the normalization so that the spectrum is normalized to the Ly alpha
+		 and K-alpha resonant line.
+
+12/29/2016 RSC: 
+	initmaker_h.py: 
+		-produced normalized and non-normalized inith files.  
+		-Added ascentcrossnorm with ascentcross and CROSSSECSnorm with CROSSSECS
+
+	kronos.py: 	
+		-Edited default resolution to 10 eV
+
+	radcas_h.f: 	
+		Edited to not normalize the spectrum or ratios. 
+		Edited the output for the ratios.dat file
+    
+    zeus_h.py:
+    	Edited to read in the non-normalized intensity (intens) from 
+		photh_.dat and to produce the line ratios both normalized and non-
+		normalized by adding in “intens" wherever “relative” is in the file.

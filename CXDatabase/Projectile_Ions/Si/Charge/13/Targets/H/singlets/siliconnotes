@@ -1,6 +1,0 @@
-Anakin:qDefect_SiXIII patrickdeanmullen$ python degencheck.py si13.singlets.sorted.nist.in si13.triplets.sorted.nist.in 
-WARNING: The 6h 1H state is degenerate with the 6h 3H state.
-WARNING: The 4f 1F state is degenerate with the 4f 3F state.
-WARNING: The 5f 1F state is degenerate with the 5f 3F state.
-WARNING: The 6g 1G state is degenerate with the 6g 3G state.
-WARNING: The 6f 1F state is degenerate with the 6f 3F state.

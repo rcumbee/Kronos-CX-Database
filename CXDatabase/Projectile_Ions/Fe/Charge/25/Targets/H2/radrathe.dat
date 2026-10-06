@@ -2322,6 +2322,4 @@
 15	13	1	14	12	1	2.19398E+03	5.11040E+09
 15	14	0	14	13	0	2.19522E+03	5.88960E+09
 15	14	1	14	13	1	2.19409E+03	5.88960E+09
-100 0 0 0 0 0   1.         1. 
-#n,l,i,np,lp,ip,Energy,Einstein A coefficients
-# Energy in Angstrom,Einstein A in cm-1
+100 0 0 0 0 0   1.         1.
