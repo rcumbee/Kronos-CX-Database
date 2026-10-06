@@ -16,7 +16,7 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       real sump, hard, interc, forb, res, sump2, energy
       parameter (nl=15)
       dimension trans(nl,nl,2,nl,nl,2),alam(nl,nl,2,nl,nl,2)
-      dimension c(nl,nl,2), cnew(nl,nl,2),cnorm(nl,nl,2)
+      dimension c(nl,nl,2), cnew(nl,nl,2)
       dimension prob(nl,nl,2,nl,nl,2)
       dimension phot(nl,nl,2,nl,nl,2)
       
@@ -71,7 +71,7 @@ c N, L, c(n,l)=cross sections, determine nmax
 c-----------------------------------------  
       open(12,file='SourceCode/NonBare/inithe.dat', status='old')
       nmax=1
- 2    read(12,*)n,l,i,c(n,l+1,i+1),cnorm(n,l+1,i+1)
+ 2    read(12,*)n,l,i,c(n,l+1,i+1)
       if (n.lt.nl+1) then
       if (n.gt.nmax) nmax=n
       goto 2

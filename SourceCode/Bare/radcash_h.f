@@ -22,7 +22,6 @@ c~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       real sump, sump2, energy
       parameter (nnn=40)
       dimension c(nnn,nnn), cnew(nnn,nnn)
-	  dimension cnorm(nnn,nnn)
       dimension phot(nnn,nnn,nnn,nnn)
       common rmax,z,potential
 c~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
@@ -35,7 +34,6 @@ c-----------------------------------------
       do j=1,nnn
       c(i,j)=0.d0
       cnew(i,j)=0.d0
-      cnorm(i,j)=0.d0
       do i1=1,nnn
       do j1=1,nnn
       phot(i,j,i1,j1)=0.d0
@@ -49,7 +47,7 @@ c N, L, c(n,l)=cross sections, determine nmax
 c-----------------------------------------  
       open(12,file='SourceCode/Bare/inith.dat', status='old')
           nmax=1
- 2    read(12,*)n,l,c(n,l+1),cnorm(n,l+1)
+ 2    read(12,*)n,l,c(n,l+1)
        if (n.lt.40) then
        if (n.gt.nmax) nmax=n
        goto 2

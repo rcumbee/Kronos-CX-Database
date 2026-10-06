@@ -79,7 +79,7 @@ f.close()
 
 initial, final, photenergy, intens,relative = loadtxt('hephaistus.dat', dtype=str, unpack = True, usecols=[0,1,2,3,4])
 
-#os.remove('hephaistus.dat')
+os.remove('hephaistus.dat')
 
 initial = initial.tolist()
 final = final.tolist()

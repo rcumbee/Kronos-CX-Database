@@ -311,9 +311,9 @@ if barisity == 'bare':
 	os.system('./SourceCode/Bare/radcash_h')
 	os.system('gfortran -o SourceCode/Bare/gauss_h SourceCode/Bare/gauss_h.f')
 	os.system('./SourceCode/Bare/gauss_h')
-	#os.remove('fort.25')
-	#os.remove('fort.35')
-	#os.remove('fort.90')
+	os.remove('fort.25')
+	os.remove('fort.35')
+	os.remove('fort.90')
 	closestenergy = loadtxt('closestenergy.dat', unpack = True, dtype=float)
 	os.remove('closestenergy.dat')
 	collenergy=closestenergy
