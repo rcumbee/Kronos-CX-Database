@@ -16,9 +16,9 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       real sump, hard, interc, forb, res, sump2, energy
       parameter (nl=15)
       dimension trans(nl,nl,2,nl,nl,2),alam(nl,nl,2,nl,nl,2)
-      dimension c(nl,nl,2), cnew(nl,nl,2)
-       dimension prob(nl,nl,2,nl,nl,2)
-       dimension phot(nl,nl,2,nl,nl,2)
+      dimension c(nl,nl,2), cnew(nl,nl,2),cnorm(nl,nl,2)
+      dimension prob(nl,nl,2,nl,nl,2)
+      dimension phot(nl,nl,2,nl,nl,2)
       
       sump=0.0d0
       sump2=0.0d0
@@ -56,37 +56,41 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       enddo
       enddo
       enddo
-
-c  read transition rates for n,l,i --> np,lp,ip (singl i,ip=0, or tripl i,ip=1) and the corresp. wavelengths 
+c-----------------------------------------  
+c  read transition rates for n,l,i --> np,lp,ip (singl i,ip=0, or tripl i,ip=1) 
+c  and the corresp. wavelengths 
+c-----------------------------------------  
       open(11,file='SourceCode/NonBare/radrathe.dat',status='old')
  1    read(11,*)n,l,i,np,lp,ip,
      &  alam(np,lp+1,ip+1,n,l+1,i+1),trans(np,lp+1,ip+1,n,l+1,i+1)
       if (n.lt.nl+1) goto 1
 c    end read
-
-
-
-c    read initial state population
-
+c-----------------------------------------  
+c Now, read in the initial state population through the cross section file.
+c N, L, c(n,l)=cross sections, determine nmax
+c-----------------------------------------  
       open(12,file='SourceCode/NonBare/inithe.dat', status='old')
       nmax=1
- 2    read(12,*)n,l,i,c(n,l+1,i+1)
-       if (n.lt.nl+1) then
-       if (n.gt.nmax) nmax=n
-       goto 2
-       endif
+ 2    read(12,*)n,l,i,c(n,l+1,i+1),cnorm(n,l+1,i+1)
+      if (n.lt.nl+1) then
+      if (n.gt.nmax) nmax=n
+      goto 2
+      endif
 
-       read(12,*)z,energy
+      read(12,*)z,energy
 
 c     end read
 
 c   create probability matrix
-
-c         write(*,*)'nmax=',nmax
-     
-
-  
-
+c###############################################	  
+c 	Here we calculate the branching ratios!	  
+c   Prob matrix is the matrix of branching ratios.
+c   anorm is the normalized Einstein A coefficient for
+c   each upper nls level
+c   the prob matrix is the the Einstein A coefficient
+c   for each transition divided by the anorm for each
+c   upper level--- AKA the branching ratio.
+c###############################################	  
        do n=1,nmax
        do l=0,n-1
        do i= 0,1
@@ -117,7 +121,9 @@ c234567
        enddo
        enddo
        enddo
-
+c###############################################	  
+c 	End calculating brancing ratios
+c###############################################	  
        do n=1,nmax
        do l=0,n-1
        do i= 0,1
@@ -143,13 +149,14 @@ c234567
 
 
 c   end create matrix
+c-----------------------------------------        
+c file cevolh.dat follows evolution of the atomic state contained in array c
+c-----------------------------------------  
+c First all n,l,c is written to file, and the normalization. 
+c cnew is the array of the population through each transition. 
 
-
-      open(55,file='cevolhe.dat')
-
-c file cevol.dat follows evolution of the atomic state contained in array c
-
-           nmax0= nmax
+       open(55,file='cevolhe.dat')
+       nmax0= nmax
        tnrm=0.d0      
        do i=0,1
        do ntest=1,nmax
@@ -162,38 +169,47 @@ c file cevol.dat follows evolution of the atomic state contained in array c
        enddo
        write(55,*)'norm=', tnrm
 
-c      start cascade
+c-----------------------------------------  
+c~~~~~~start cascade~~~~~~~~~~~~~~~~~~~~~~
+c      nmax starts at the highest n and is subtracted by 1 for each cascade
+c	 to lower energy levels.
+c      c is modified after each cascade to the newest population.
+c	  those values higher than nmax are left alone.
+c      cnew is set to zero for recalculation up to nmax for each
+c	  cascade
+c      phot is the summation of the populations for each n and l level.
+c  icasc is the counter for the cascade, the final value should be nmax-1.
+c-----------------------------------------  
+       stable=0.d0
 
-         stable=0.d0
-
-        icasc=0
+       icasc=0
 
  3     if(nmax.eq.2.and.c(2,2,1).eq.0.d0.and.c(2,2,2).eq.0.d0) goto 100        
        
-        icasc= icasc+1
+       icasc= icasc+1
 
-        if(icasc.gt.20) goto 100
+       if(icasc.gt.50) goto 100
 
-        do n=1,nmax
-        do l=0,n-1
-        do i=0,1
-         if (prob(n,l+1,i+1,n,l+1,i+1).lt.1.d0) then
-        do np= 1,n
-        do lp= 0, np-1
-        do ip= 0,1
+       do n=1,nmax
+       do l=0,n-1
+       do i=0,1
+       if (prob(n,l+1,i+1,n,l+1,i+1).lt.1.d0) then
+       do np= 1,n
+       do lp= 0, np-1
+       do ip= 0,1
        cnew(np,lp+1,ip+1)= cnew(np,lp+1,ip+1)
      &  + prob(np,lp+1,ip+1,n,l+1,i+1)*c(n,l+1,i+1)
-         if((n-np)**2+(l-lp)**2+(i-ip)**2.gt.0) then
-         phot(np,lp+1,ip+1,n,l+1,i+1)= phot(np,lp+1,ip+1,n,l+1,i+1)
-     &   + prob(np,lp+1,ip+1,n,l+1,i+1)*c(n,l+1,i+1)
-         endif
+       if((n-np)**2+(l-lp)**2+(i-ip)**2.gt.0) then
+       phot(np,lp+1,ip+1,n,l+1,i+1)= phot(np,lp+1,ip+1,n,l+1,i+1)
+     &  + prob(np,lp+1,ip+1,n,l+1,i+1)*c(n,l+1,i+1)
+       endif
        enddo
        enddo
        enddo
-         else
-         cnew(n,l+1,i+1)= c(n,l+1,i+1)
-         stable=stable+c(n,l+1,i+1)
-        endif
+       else
+       cnew(n,l+1,i+1)= c(n,l+1,i+1)
+       stable=stable+c(n,l+1,i+1)
+       endif
        enddo
        enddo
        enddo       
@@ -207,22 +223,19 @@ c      start cascade
        enddo
        enddo
 
-        nmax1=nmax
-        nmax=1
+       nmax1=nmax
+       nmax=1
       
-        do n=1,nmax1 
-        do l=0,n-1
-        do i=0,1
-        if(c(n,l+1,i+1).gt.0.d0.and.n.gt.nmax) nmax=n
-        enddo
-        enddo
-        enddo
+       do n=1,nmax1 
+       do l=0,n-1
+       do i=0,1
+       if(c(n,l+1,i+1).gt.0.d0.and.n.gt.nmax) nmax=n
+       enddo
+       enddo
+       enddo
 
-
-
-
-        write(55,*) 'icasc=', icasc
-        write(55,*) 'nmax=', nmax
+       write(55,*) 'icasc=', icasc
+       write(55,*) 'nmax=', nmax
 
        tnrm=0.d0      
        do ntest=1,nmax
@@ -238,14 +251,27 @@ c      start cascade
 
        goto 3
          
+c-----------------------------------------           
 c       end cascade
+c-----------------------------------------
 
+c-----------------------------------------
+C Calculate Ratios
+c ephot is the energy difference of the initial and final state
+c ephot0 is the energy difference of the 2-1 state.
+c rad is equivalent to the population of a state. The relative intensity
+c is equal to rad/phot
+c rad1 is summation of the l states for each n. 
+c phot is 
+c photout is normalized
+c-----------------------------------------
  100   open(2,file='phothe.dat')
        open(7,file='photout.dat')
-       open(20,file='ratios.dat')
-        write(7,*) energy
+       open(27,file='ratios.dat')
+       write(7,*) energy
+	   
 
-        tot=0.d0
+       tot=0.d0
        phot0= phot(1,1,1,2,2,1)
 
        do n=nmax0,2,-1
@@ -255,32 +281,32 @@ c       end cascade
        do i=0,1
        do ip=0,1
        rad= phot(np,lp+1,ip+1,n,l+1,i+1)
-        ephot= 1.d8/alam(np,lp+1,ip+1,n,l+1,i+1)/8065.5d0
+       ephot= 1.d8/alam(np,lp+1,ip+1,n,l+1,i+1)/8065.5d0
 
-        if (rad.gt.0.d0) then 
-        write(2,*)n,l,i , '-->'  ,np,lp,ip,'  phot(eV)=', ephot,
+       if (rad.gt.0.d0) then 
+       write(2,*)n,l,i , '-->'  ,np,lp,ip,'  phot(eV)=', ephot,
      &   '   ',rad,' relat= ',rad/phot0
 c
-cpcs added to compute line ratios
+c pcs added to compute line ratios
 c        if((np.eq.1).and.(i.eq.0).and.(l.eq.1)) then
-        if((np.eq.1)) then
+       if((np.eq.1)) then
 c           write(20,*)n,l,i , '-->'  ,np,lp,ip,'  phot(eV)=', ephot,
 c     .      '   ',rad,' relat= ',rad/phot0
-           if(n.gt.2) sump=sump + rad/phot0
-           if(n.eq.2) sump2=sump2 + rad/phot0
+       if(n.gt.2) sump=sump + rad/phot0
+       if(n.eq.2) sump2=sump2 + rad/phot0
 c           write(20,*) sump,sump2
-        end if 
-        if((np.eq.1).and.(n.eq.2)) then
+       end if 
+       if((np.eq.1).and.(n.eq.2)) then
 c           write(20,*)n,l,i , '-->'  ,np,lp,ip,'  phot(eV)=', ephot,
 c     .      '   ',rad,' relat= ',rad/phot0
-          if((l.eq.1).and.(ip.eq.0).and.(i.eq.0)) res=rad/phot0 
-          if((l.eq.0).and.(ip.eq.0).and.(i.eq.1)) forb=rad/phot0 
-          if((l.eq.1).and.(ip.eq.0).and.(i.eq.1)) interc=rad/phot0 
-        endif
-         write(7,*)ephot, rad/phot0
+       if((l.eq.1).and.(ip.eq.0).and.(i.eq.0)) res=rad/phot0 
+       if((l.eq.0).and.(ip.eq.0).and.(i.eq.1)) forb=rad/phot0 
+       if((l.eq.1).and.(ip.eq.0).and.(i.eq.1)) interc=rad/phot0 
+       endif
+       write(7,*)ephot, rad/phot0
 
-        tot= tot+rad
-        endif
+       tot= tot+rad
+       endif
        enddo
        enddo
        enddo
@@ -288,16 +314,34 @@ c     .      '   ',rad,' relat= ',rad/phot0
        enddo
        enddo
 
-        write(20,999)
-        write(20,998)
-        write(20,*) energy, res, forb, interc, forb/interc, res/interc, 
-     .              (forb+interc)/res,sump/sump2
-        write(2,*)'totrad=', tot
-        write(2,*)'totrad+stable=', tot+stable
+c       write(20,999)
+c       write(20,998)
+c	   write(20,*) energy, res, forb, interc, forb/interc, res/interc, 
+c     .              (forb+interc)/res,sump/sump2
+   	   write(27,997) 'Energy(eV)', energy
+   	   write(27,997) 'H ', sump/(res + forb + interc)
+   	   write(27,997) "H'", sump/res
+   	   write(27,997) "R ", forb/interc
+   	   write(27,997) 'G ', (forb + interc)/res
+   	   write(27,997) "G'", (forb + interc)/(res + sump)
+   	   write(27,*) '# He-like Line ratios are provided as described',
+     .   ' in Leutenegger, M. A., et al. PRL 105.6 (2010): 063201.'
+   	   write(27,*) '# H = K beta+ / SUM( K alpha F + I + R)'
+   	   write(27,*) "# H' = K beta+ / K alpha R"
+   	   write(27,*) "# R = K alpha F / K alpha I"
+   	   write(27,*) "# G = SUM(K alpha F + I) / K alpha R"
+   	   write(27,*) "# G' = SUM(K alpha F + I)/SUM( K alpha R + ",
+     .              "K beta+)"
+	   
+	   
+	 
+       write(2,*)'totrad=', tot
+       write(2,*)'totrad+stable=', tot+stable
 
-         write(7,*)-1.d0, 0.d0
+       write(7,*)-1.d0, 0.d0
 999    format('# Collision        He-like line intensities and ratios')
 998    format('# energy (eV/u)    Res    Forb   Interc   R   L   G  H')
+997    FORMAT(A14,F10.4)
 
        end
 

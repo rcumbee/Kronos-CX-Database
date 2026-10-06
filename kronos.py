@@ -311,9 +311,9 @@ if barisity == 'bare':
 	os.system('./SourceCode/Bare/radcash_h')
 	os.system('gfortran -o SourceCode/Bare/gauss_h SourceCode/Bare/gauss_h.f')
 	os.system('./SourceCode/Bare/gauss_h')
-	os.remove('fort.25')
-	os.remove('fort.35')
-	os.remove('fort.90')
+	#os.remove('fort.25')
+	#os.remove('fort.35')
+	#os.remove('fort.90')
 	closestenergy = loadtxt('closestenergy.dat', unpack = True, dtype=float)
 	os.remove('closestenergy.dat')
 	collenergy=closestenergy
@@ -466,6 +466,8 @@ if barisity == 'nonbare':
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '.aux')
 	os.system('mv LineRatios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/LineRatios_' + str(method) + '.dat')
+	os.system('mv H_Ratios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/H_Ratios_' + str(method) + '.dat')
+
 	os.system('mv LineRatios.log Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '.log')
 	os.system('mv LineRatios.pdf Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \

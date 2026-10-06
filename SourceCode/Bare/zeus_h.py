@@ -77,7 +77,7 @@ for i in range(0, len(lineslist)):
 	f.write(lineslist[i] + '\n')
 f.close()
 
-initial, final, photenergy, relative,intens = loadtxt('hephaistus.dat', dtype=str, unpack = True, usecols=[0,1,2,3,4])
+initial, final, photenergy, intens,relative = loadtxt('hephaistus.dat', dtype=str, unpack = True, usecols=[0,1,2,3,4])
 
 #os.remove('hephaistus.dat')
 
@@ -131,7 +131,7 @@ if len(initial) > 1:
 	outputfile.write('\\tablecolumns{4}' + '\n')
 	outputfile.write('\\tablewidth{0pc}' + '\n')
 	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets  using the '  + str(method) + ' ' + str(distribution) + ' ' + 'method}' + '\n')
-	outputfile.write('\\tablehead{\multicolumn{4}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio} & \colhead{Line Ratio Normalized}}')
+	outputfile.write('\\tablehead{\multicolumn{4}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Normalized Line Ratio} & \colhead{Line Ratio}}')
 	outputfile.write('\startdata' + '\n')
 	for i in range(0, len(tags)):
 		outputfile.write('%.2f' % float(photenergy[indices[i]]) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative[indices[i]]) + '   &   ' +  '%.4f' % float(intens[indices[i]]) + '\t' + '\\' + '\\' + '\n')
@@ -149,7 +149,7 @@ else:
 	outputfile.write('\\tablecolumns{4}' + '\n')
 	outputfile.write('\\tablewidth{0pc}' + '\n')
 	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets using the '  + str(method) + ' ' + str(distribution) + ' ' + 'method}' + '\n')
-	outputfile.write('\\tablehead{\multicolumn{4}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}& \colhead{Line Ratio Normalized}}')
+	outputfile.write('\\tablehead{\multicolumn{4}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Normalized Line Ratio}& \colhead{Line Ratio}}')
 	outputfile.write('\startdata' + '\n')
 	for i in range(0, len(tags)):
 		outputfile.write('%.2f' % float(photenergy) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative) + '   &   ' +  '%.4f' % float(intens[indices[i]]) + '\t' + '\\' + '\\' + '\n')

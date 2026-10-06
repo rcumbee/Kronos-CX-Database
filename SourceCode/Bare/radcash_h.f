@@ -22,8 +22,8 @@ c~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       real sump, sump2, energy
       parameter (nnn=40)
       dimension c(nnn,nnn), cnew(nnn,nnn)
-	  dimension cnormnew(nnn,nnn),cnorm(nnn,nnn)
-      dimension phot(nnn,nnn,nnn,nnn),photnorm(nnn,nnn,nnn,nnn)
+	  dimension cnorm(nnn,nnn)
+      dimension phot(nnn,nnn,nnn,nnn)
       common rmax,z,potential
 c~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~    
 c     initialize three arrays, c, cnew, and phot to be 0 to max possible n. 
@@ -36,11 +36,9 @@ c-----------------------------------------
       c(i,j)=0.d0
       cnew(i,j)=0.d0
       cnorm(i,j)=0.d0
-      cnormnew(i,j)=0.d0
       do i1=1,nnn
       do j1=1,nnn
       phot(i,j,i1,j1)=0.d0
-	  photnorm(i,j,i1,j1)=0.d0
       enddo
       enddo
       enddo
@@ -65,21 +63,17 @@ c First all n,l,c is written to file, and the normalization.
 c cnew is the array of the population through each transition. 
        cnew(2,1)= c(2,1)
        cnew(1,1)= c(1,1)
-       cnormnew(2,1)= cnorm(2,1)
-       cnormnew(1,1)= cnorm(1,1)
-      open(55,file='cevolh.dat')
+       open(55,file='cevolh.dat')
 c file cevolh.dat follows evolution of the atomic state contained in array c
 
        nmax0= nmax
-       tnrmnorm=0.d0      
        do ntest=1,nmax
        do ltest=0,ntest-1
-       write(55,*)ntest,ltest, c(ntest,ltest+1),cnorm(ntest,ltest+1)
+       write(55,*)ntest,ltest, c(ntest,ltest+1)
        tnrm=tnrm+ c(ntest,ltest+1)
-       tnrmnorm=tnrmnorm+ cnorm(ntest,ltest+1)
        enddo
        enddo
-       write(55,*)'norm=', tnrm,tnrmnorm
+       write(55,*)'norm=', tnrm
 
 c-----------------------------------------  
 c~~~~~~start cascade~~~~~~~~~~~~~~~~~~~~~~
@@ -95,7 +89,6 @@ c-----------------------------------------
         icasc=0
 c stable is the sum of the n=1 and 2 levels through each cascade.
         stable= c(2,1)+c(1,1)
-        stablenorm= cnorm(2,1)+cnorm(1,1)
 		
 
  3      if (nmax.eq.1) goto 100
@@ -109,12 +102,8 @@ c to the lowest energy level.The cascade continues until only n=2-1 is left.
        do np= 1,n-1
        do lp= 0, np-1
        cnew(np,lp+1)= cnew(np,lp+1) + prob1(np,lp,n,l)*c(n,l+1)
-       cnormnew(np,lp+1)= cnormnew(np,lp+1) 
-     &  + prob1(np,lp,n,l)*cnorm(n,l+1)	 
        phot(np,lp+1,n,l+1)= phot(np,lp+1,n,l+1)
      &  + prob1(np,lp,n,l)*c(n,l+1)
-       photnorm(np,lp+1,n,l+1)= photnorm(np,lp+1,n,l+1)
-     &  + prob1(np,lp,n,l)*cnorm(n,l+1)
        enddo
        enddo
        enddo
@@ -128,18 +117,13 @@ c This only counts for n = 0 to nmax.
        do l= 0,n-1
        c(n,l+1)= cnew(n,l+1) 
        cnew(n,l+1)=0.d0
-       cnorm(n,l+1)= cnormnew(n,l+1) 
-       cnormnew(n,l+1)=0.d0
        enddo
        enddo
 
        cnew(2,1)= c(2,1)
        cnew(1,1)= c(1,1)
-       cnormnew(2,1)= cnorm(2,1)
-       cnormnew(1,1)= cnorm(1,1)
 
        stable= stable+ c(2,1)+c(1,1)
-       stablenorm= stable+ cnorm(2,1)+cnorm(1,1)
 
        write(55,*) 'icasc=', icasc
        write(55,*) 'nmax=', nmax
@@ -149,15 +133,15 @@ c Write from n=0 to nmax.
        tnrm=0.d0      
        do ntest=1,nmax
        do ltest=0,ntest-1
-       write(55,*)ntest,ltest, c(ntest,ltest+1),cnorm(ntest,ltest+1)
+       write(55,*)ntest,ltest, c(ntest,ltest+1)
        tnrm=tnrm+ c(ntest,ltest+1)
        enddo
        enddo
-       write(55,*)'norm=', tnrm, tnrmnorm
+       write(55,*)'norm=', tnrm
        else
-       write(55,*)1,0, c(1,1),cnorm(1,1)
-       write(55,*)2,0, c(2,1), cnorm(2,1)
-       write(55,*)'norm=', c(1,1)+c(2,1) , cnorm(1,1)+cnorm(2,1)       
+       write(55,*)1,0, c(1,1)
+       write(55,*)2,0, c(2,1)
+       write(55,*)'norm=', c(1,1)+c(2,1)      
        endif
 
        goto 3
@@ -189,18 +173,16 @@ c-----------------------------------------
        ephot0= enr(2,10.d0)-enr(1,10.d0)
 c Want to calculate Einstein A Coefficients here. 
        rad1=0.d0
-       rad1norm=0.d0
        do lp= 0, np-1
        do l= 0,n-1
        rad= phot(np,lp+1,n,l+1)
-       radnorm= photnorm(np,lp+1,n,l+1)
 	   
        if (rad.gt.0.d0) then 
        write(2,*)n,l,  '-->'  ,np,lp,'  phot(eV)=', ephot,
-     &   '   ',rad,' relat= ',rad/phot(1,1,2,2), radnorm
+     &   '   ',rad,' relat= ',rad/phot(1,1,2,2)
 c23456
        write(25,*)n,l,  '-->'  ,np,lp,'  phot(eV)=', ephot,
-     &   '   ',rad,' relat= ',rad/phot(1,1,2,2)*ephot/ephot0, radnorm
+     &   '   ',rad,' relat= ',rad/phot(1,1,2,2)*ephot/ephot0
 
        rad1= rad1+rad	   
 c~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	   
@@ -221,10 +203,10 @@ c~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 c Write resulting photons energies and Relative Intensities to file. 
        if (rad1.gt.0.d0)  then
           write(3,*)n, '-->'  ,np,'  phot(eV)=', ephot,
-     &   '   ',rad1,' relat= ',rad1/phot(1,1,2,2), radnorm
+     &   '   ',rad1,' relat= ',rad1/phot(1,1,2,2)
 c23456
           write(35,*)n, '-->'  ,np,'  phot(eV)=', ephot,
-     &   '   ',rad1,' relat= ',rad1/phot(1,1,2,2)*ephot/ephot0, radnorm
+     &   '   ',rad1,' relat= ',rad1/phot(1,1,2,2)*ephot/ephot0
           write(7,*)ephot, rad1/phot(1,1,2,2),rad1
 
 
@@ -234,13 +216,16 @@ c23456
 	   enddo
        
 
-       write(20,999)
-       write(20,*) energy, sump/sump2
+   	   write(20,997) 'Energy(eV)', energy
+   	   write(20,997) 'H ', sump/sump2
+   	   write(20,*) '# H-like Hardness ratio as described in P. ',
+     .   'Beiersdorfer, et al., Astrophys. J. 549, L147 (2001).'
        write(3,*)'totrad=', tot
        write(3,*)'totrad+stable=', tot+stable
 
        write(7,*)-1.d0, 0.d0
-999    format('# Collision energy (eV/u), Hardness ratio')
+997    FORMAT(A14,F10.4)
+
 
        end
 c###################################################################

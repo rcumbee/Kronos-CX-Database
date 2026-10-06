@@ -1,25 +1,13 @@
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c radcash                                                          c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c    calculates cascade of radiative transitions for one-electron  c
-c    excited state of the hydrogenic atom                          c
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c Milun Rakovic  July 2006
-c pcs 5-28-12 add Hardness ratio calculation and comments 
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-c  input - inith.dat  - relative cross sections for each nl level
-c          obtained from, for example, casmainh
-c  output - many files, but most important are:
-c           phot* and ratios.dat
-cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+c    calculates cascade of radiative transitions for one-electron excited state of
+c    hydrogenic atom
+cpcs 5-28-12 add Hardness ratio calculation  
 
       implicit real*8(a-h,o-z)
       real sump, sump2, energy
       parameter (nnn=40)
-      dimension c(nnn,nnn), cnew(nnn,nnn),
-	  dimension cnormnew(nnn,nnn),cnorm(nnn,nnn)
-      dimension phot(nnn,nnn,nnn,nnn)
-      common rmax,z,potential
+      dimension c(nnn,nnn), cnew(nnn,nnn)
+       dimension phot(nnn,nnn,nnn,nnn)
+        common rmax,z,potential
        
 
       sump=0.0d0
@@ -29,8 +17,6 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
       do j=1,nnn
       c(i,j)=0.d0
       cnew(i,j)=0.d0
-      cnorm(i,j)=0.d0
-      cnormnew(i,j)=0.d0
       do i1=1,nnn
       do j1=1,nnn
       phot(i,j,i1,j1)=0.d0
@@ -45,7 +31,7 @@ c    read initial state population
 
       open(12,file='SourceCode/Bare/inith.dat', status='old')
           nmax=1
- 2    read(12,*)n,l,c(n,l+1),cnorm(n,l+1)
+ 2    read(12,*)n,l,c(n,l+1)
        if (n.lt.40) then
        if (n.gt.nmax) nmax=n
        goto 2
@@ -57,6 +43,7 @@ c     end read
 
        cnew(2,1)= c(2,1)
        cnew(1,1)= c(1,1)
+
       open(55,file='cevolh.dat')
 
 c file cevolh.dat follows evolution of the atomic state contained in array c
@@ -70,7 +57,7 @@ c file cevolh.dat follows evolution of the atomic state contained in array c
        enddo
        enddo
        write(55,*)'norm=', tnrm
-	   	   
+
 c      start cascade
 
         icasc=0
@@ -86,14 +73,15 @@ c      start cascade
         do l=0,n-1
         do np= 1,n-1
         do lp= 0, np-1
-           cnew(np,lp+1)= cnew(np,lp+1) + prob1(np,lp,n,l)*c(n,l+1)
-           phot(np,lp+1,n,l+1)= phot(np,lp+1,n,l+1)
-     &  +  prob1(np,lp,n,l)*c(n,l+1)
-        enddo
-        enddo
-        enddo
-        enddo
- 
+       cnew(np,lp+1)= cnew(np,lp+1) + prob1(np,lp,n,l)*c(n,l+1)
+       phot(np,lp+1,n,l+1)= phot(np,lp+1,n,l+1)
+     &  + prob1(np,lp,n,l)*c(n,l+1)
+       enddo
+       enddo
+       enddo
+       enddo
+
+      
        nmax=nmax-1
 
 
@@ -127,17 +115,12 @@ c      start cascade
        write(55,*)'norm=', c(1,1)+c(2,1)       
        endif
 
-       goto 3    
+       goto 3
          
 c       end cascade
-c######################################################
+      
 
-
-	   
-C***********************************************************************
-C Calculate Ratios
-C***********************************************************************
- 100    open(2,file='photh.dat')
+ 100   open(2,file='photh.dat')
         open(3,file='phot1h.dat')
         open(7,file='photouth.dat')
         open(20,file='ratios.dat')
@@ -147,59 +130,59 @@ C***********************************************************************
 
        do n=nmax0,2,-1
        do np=1,nmax0-1
-          ephot= enr(n,z)-enr(np,z)
-          ephot0= enr(2,10.d0)-enr(1,10.d0)
-          rad1=0.d0
+        ephot= enr(n,z)-enr(np,z)
+        ephot0= enr(2,10.d0)-enr(1,10.d0)
+        rad1=0.d0
        do lp= 0, np-1
        do l= 0,n-1
-          rad= phot(np,lp+1,n,l+1)
-          if (rad.gt.0.d0) then 
-          write(2,*)n,l,  '-->'  ,np,lp,'  phot(eV)=', ephot,
+       rad= phot(np,lp+1,n,l+1)
+        if (rad.gt.0.d0) then 
+        write(2,*)n,l,  '-->'  ,np,lp,'  phot(eV)=', ephot,
      &   '   ',rad,' relat= ',rad/phot(1,1,2,2)
 c23456
-          write(25,*)n,l,  '-->'  ,np,lp,'  phot(eV)=', ephot,
+        write(25,*)n,l,  '-->'  ,np,lp,'  phot(eV)=', ephot,
      &   '   ',rad,' relat= ',rad/phot(1,1,2,2)*ephot/ephot0
 
-          rad1= rad1+rad
-c pcs added to compute line ratios
-       if((np.eq.1).and.(l.eq.1)) then
+        rad1= rad1+rad
+cpcs added to compute line ratios
+        if((np.eq.1).and.(l.eq.1)) then
 c           write(20,*)n,l, '-->'  ,np,lp,'  phot(eV)=', ephot,
 c     .      '   ',rad,' relat= ',rad/phot(1,1,2,2)
-          if(n.gt.2) sump=sump + rad/phot(1,1,2,2)
-          if(n.eq.2) sump2=sump2 + rad/phot(1,1,2,2)
-          end if
+           if(n.gt.2) sump=sump + rad/phot(1,1,2,2)
+           if(n.eq.2) sump2=sump2 + rad/phot(1,1,2,2)
+        end if
 c           write(20,999) sump
 
 
-       endif
+        endif
        enddo
        enddo
-       if (rad1.gt.0.d0)  then
-       write(3,*)n, '-->'  ,np,'  phot(eV)=', ephot,
+        if (rad1.gt.0.d0)  then
+        write(3,*)n, '-->'  ,np,'  phot(eV)=', ephot,
      &   '   ',rad1,' relat= ',rad1/phot(1,1,2,2)
 c23456
-       write(35,*)n, '-->'  ,np,'  phot(eV)=', ephot,
+        write(35,*)n, '-->'  ,np,'  phot(eV)=', ephot,
      &   '   ',rad1,' relat= ',rad1/phot(1,1,2,2)*ephot/ephot0
-       write(7,*)ephot, rad1/phot(1,1,2,2)
+         write(7,*)ephot, rad1/phot(1,1,2,2)
 
 
         tot= tot+rad1
-       endif
+        endif
        enddo
        enddo
 
-       write(20,999)
-       write(20,*) energy, sump/sump2
-       write(3,*)'totrad=', tot
-       write(3,*)'totrad+stable=', tot+stable
+        write(20,999)
+        write(20,*) energy, sump/sump2
+        write(3,*)'totrad=', tot
+        write(3,*)'totrad+stable=', tot+stable
 
-       write(7,*)-1.d0, 0.d0
+         write(7,*)-1.d0, 0.d0
 999    format('# Collision energy (eV/u), Hardness ratio')
 
        end
-	   
-	   
-c**************************************************************************************
+
+
+
       function enr(n,z)
 c        calculates energy levels in eV
       implicit real*8(a-h,o-z)
@@ -207,8 +190,7 @@ c        calculates energy levels in eV
       enr = potential / n**2
       return
       end
-c**************************************************************************************
-c**************************************************************************************
+
             
       function prob1(np,lp,n,l)
 c    calculates transition probabilities in terms of ordinary quant. num.
@@ -231,8 +213,7 @@ c    calculates transition probabilities in terms of ordinary quant. num.
       prob1= trans(np,lp,n,l)/anorm
       return
       end
-c**************************************************************************************
-c**************************************************************************************
+
 
 
       function  trans(np,lp,n,l)
@@ -282,8 +263,7 @@ c         conversion from a.u. to 1/sec
        write(90,*) np,lp,n,l,q,trans
        return
        end
-c**************************************************************************************
-c**************************************************************************************
+
             double precision function hrad(n,l,r)
 c    radial eigenfunction of hydrogen atom in atomic units (Messiah & Sobelman)
            implicit real*8 (a-h,o-z)
@@ -308,8 +288,7 @@ c    radial eigenfunction of hydrogen atom in atomic units (Messiah & Sobelman)
              return
              end
 
-c**************************************************************************************
-c**************************************************************************************
+
             double precision function funlag(n,m,x)
 c    lebedev's laguerre polynomial
            implicit real*8 (a-h,o-z)
@@ -341,8 +320,7 @@ c    lebedev's laguerre polynomial
 
 
      
-c**************************************************************************************
-c**************************************************************************************
+
       SUBROUTINE QSF(H,Y,Z,NDIM)
       implicit real*8 (a-h,o-z)
       dimension Y(*),Z(*)

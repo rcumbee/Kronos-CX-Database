@@ -73,7 +73,7 @@ for i in range(0, len(lineslist)):
 	f.write(lineslist[i] + '\n')
 f.close()
 
-initialn, initiall, initials, finaln, finall, finals, photenergy, relative = loadtxt('hephaistus.dat', dtype=str, unpack = True, usecols=[0,1,2,3,4,5,6,-1])
+initialn, initiall, initials, finaln, finall, finals, photenergy, intens, relative = loadtxt('hephaistus.dat', dtype=str, unpack = True, usecols=[0,1,2,3,4,5,6,7,-1])
 
 os.remove('hephaistus.dat')
 
@@ -85,6 +85,7 @@ finall = finall.tolist()
 finals = finals.tolist()
 photenergy = photenergy.tolist()
 relative = relative.tolist()
+intens = intens.tolist()
 
 initialn.reverse()
 initiall.reverse()
@@ -94,6 +95,7 @@ finall.reverse()
 finals.reverse()
 photenergy.reverse()
 relative.reverse()
+intens.reverse()
 
 dict = {'210100':'K alpha r', '211100':'K alpha i' , '201100':'K alpha f','310100':'K beta  ', '410100':'K gamma ', '510100':'K delta ', '610100':'K epsilon ', '710100':'K zeta  ', '810100':'K eta   ', '910100':\
 'K theta ', '1010100':'K iota  ', '1110100': 'K kappa ', '1210100': 'K lambda ', '1310100': 'K mu    ', '1410100': 'K nu    ', '1510100':'K xi    ', '1610100': 'K omicron',\
@@ -118,7 +120,7 @@ finalindex = list()
 for i in index:
 	if i not in finalindex:
 		finalindex.append(i)
-
+print finalindex
 finalindex.remove('nothere')
 
 finaltags = list()
@@ -126,27 +128,45 @@ finaltags = list()
 for i in range(0, len(finalindex)):
 	finaltags.append(str(dict[newlist[finalindex[i]]]))
 
+
 outputfile = open('LineRatios.dat', 'w')
 outputfile.write('#Collision Energy = ' + str(CollisionEnergy) + ' eV/u   Collision Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) +'\n')
 outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Line Ratio' + '\n')
 for i in range(0, len(finalindex)):
-	outputfile.write(str(photenergy[finalindex[i]]) + '\t' + str(finaltags[i]) + '\t' + str(relative[finalindex[i]]) + '\n')
+	outputfile.write(str(photenergy[finalindex[i]]) + '\t' + str(finaltags[i]) + '\t' + str(relative[finalindex[i]]) + '\t' + str(intens[finalindex[i]]) + '\n')
 outputfile.close()
-
+#*********************************************************
+# Included to calculate the ratios of all lines divinded by
+# K_alpha
+#*********************************************************
+finalH = []
+k_alpha = float(relative[finalindex[0]])+float(relative[finalindex[1]])+float(relative[finalindex[2]])
+print float(relative[finalindex[0]]),float(relative[finalindex[1]]),float(relative[finalindex[2]]),k_alpha
+for i in range(0, len(finalindex)):
+    print float(relative[finalindex[i]])/k_alpha
+for i in range(0, len(finalindex)):
+	finalH.append(float(relative[finalindex[i]])/k_alpha)
+outputfile = open('H_Ratios.dat', 'w')
+outputfile.write('#Collision Energy = ' + str(CollisionEnergy) + ' eV/u   Collision Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) +'\n')
+outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Hardness Line Ratio' + '\n')
+for i in range(0, len(finalindex)):
+	outputfile.write(str(photenergy[finalindex[i]]) + '\t' + str(newlist[finalindex[i]]) + '\t' + str(finalH[i]) + '\n')
+outputfile.close()
+#*********************************************************
 for i in range(0, len(finaltags)):
 	finaltags[i] = finaltags[i].replace('K ', 'K $\\')
 
 outputfile = open('LineRatios.tex', 'w')
 outputfile.write('\documentclass{aastex}' + '\n')
 outputfile.write('\\begin{document}' + '\n')
-outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
-outputfile.write('\\tablecolumns{3}' + '\n')
+outputfile.write('\\begin{deluxetable}{cccc}' + '\n')
+outputfile.write('\\tablecolumns{4}' + '\n')
 outputfile.write('\\tablewidth{0pc}' + '\n')
 outputfile.write('\\tablecaption{'  + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets using the '  + str(method) + ' ' + 'method }' + '\n')
-outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
+outputfile.write('\\tablehead{\multicolumn{4}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + '\colhead{Emission Line} & \colhead{Photon Energy (eV)} &  \colhead{Normalized Line Ratio} & \colhead{Line Ratio}}')
 outputfile.write('\startdata' + '\n')
 for i in range(0, len(finaltags)):
-	outputfile.write('%.2f' % float(photenergy[finalindex[i]]) + '   &   ' + str(finaltags[i][0:-1]) + '$ ' + str(finaltags[i][-1]) + ' &   ' +  '%.4f' % float(relative[finalindex[i]]) + '\t' + '\\' + '\\' + '\n')
+	outputfile.write(str(finaltags[i][0:-1]) + '$ ' + str(finaltags[i][-1]) + ' &   ' +'%.2f' % float(photenergy[finalindex[i]]) + '   &   ' +   '%.4f' % float(relative[finalindex[i]]) + '   &   ' +   '%.4f' % float(intens[finalindex[i]]) + '\t' + '\\' + '\\' + '\n')
 outputfile.write('\\' + '\\' + '\n')
 outputfile.write('\hline' + '\n')
 outputfile.write('\enddata' + '\n')

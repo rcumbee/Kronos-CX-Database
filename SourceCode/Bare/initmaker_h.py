@@ -128,7 +128,7 @@ outputfile.close()
 outputfile = open('inith.dat', 'w')
 for i in range(0, len(indexing)):
 	outputfile.write(str(nlist[indexing[i]]) + '\t' + str(llist[indexing[i]]) + '\t' + str(ascentcross[i]) +  '\t' + str(ascentcrossnorm[i]) + '\n')
-outputfile.write(str(int(100.0)) + '\t' + '0' + '\t'  + '0' + '\t' + '0.0d0' + '\t' + '0.0d0' + '\n')
+outputfile.write(str(int(100.0)) + '\t' + '0' + '\t'  + '0' + '\t' + '0.0d0' + '\t' + '0.0d0'  + '\n')
 outputfile.write(str(charge) + '\t' + str(rmax) + '\t' + str(closest[1]) + '\t' + str(excites[-1] * float(-1.23984E-4)))
 outputfile.close()
 

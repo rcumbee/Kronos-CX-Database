@@ -35,7 +35,7 @@ c
         enddo
 
             read(11,*)delta,nn,emin,emax
-
+c 			normalization factor: Not necessary.			
            dpi= delta*dsqrt(dacos(-1.d0))
 
 
@@ -43,7 +43,7 @@ c
   1      i=i+1
            read(7,*)ephot(i), rad(i)
            if (ephot(i).gt.0.d0) then
-              write(12,*)ephot(i),rad(i)/dpi
+              write(12,*)ephot(i),rad(i)
               goto 1
            end if
     
@@ -62,7 +62,7 @@ c
          do i=1,n
          emis= emis + rad(i)*dexp(-((e-ephot(i))/delta)**2)
          enddo
-         emis= emis/dpi
+c         emis= emis/dpi
          if (emis.gt.1.0d-99) write(8,*)e,emis
         enddo
 998     format('# Convolved spectrum, gaussian FWHM = ',f8.2,' eV')

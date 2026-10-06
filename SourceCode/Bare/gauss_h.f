@@ -16,8 +16,8 @@ c output - photline.dat - normalized line     c
 c          spectrum                           c
 ccccccccccccccccccccccccccccccccccccccccccccccc   
 c
-        implicit real*8(a-h,o-z)
-        dimension ephot(1000), rad(1000) 
+      implicit real*8(a-h,o-z)
+          dimension ephot(1000), rad(1000) 
         double precision energy
         open(7,file='photouth.dat',status='old')
         open(11,file='SourceCode/Bare/gauss.in',status='old')
@@ -43,7 +43,7 @@ c
   1      i=i+1
            read(7,*)ephot(i), rad(i)
            if (ephot(i).gt.0.d0) then
-              write(12,*)ephot(i),rad(i)/dpi
+              write(12,*)ephot(i),rad(i)
               goto 1
            end if
     
@@ -62,7 +62,7 @@ c
          do i=1,n
          emis= emis + rad(i)*dexp(-((e-ephot(i))/delta)**2)
          enddo
-         emis= emis/dpi
+         emis= emis
          if (emis.gt.1.0d-99) write(8,*)e,emis
         enddo
 998     format('# Convolved spectrum, gaussian FWHM = ',f8.2,' eV')
