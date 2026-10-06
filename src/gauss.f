@@ -9,14 +9,14 @@ cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 c
 c    Copyright 2017 P. D. Mullen, R. S. Cumbee, P. C. Stancil
 c
-c                        Kronos version 3.0   (released Feb 7, 2017)
+c                        Kronos version 3.1   (released May 16, 2017)
 c
 c    This file is part of Kronos. Kronos is a series of python and fortran codes 
 c    utilizing a comprehensive charge exchange database at its backbone to generate 
 c    theoretical line ratios and spectra for many single electron capture systems. 
 c
 c    You are morally obligated to cite the following paper in his/her
-c    scientific literature that results from use of any part of HAM:
+c    scientific literature that results from use of any part of Kronos:
 c
 c    [1] Mullen et al. (2016), ApJS 224, 31
 c    [2] Cumbee et al. (2017), ApJ, in prep
@@ -54,7 +54,7 @@ c
 cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc   
 
       implicit real*8(a-h,o-z)
-          dimension ephot(1000), rad(1000) 
+          dimension ephot(6000), rad(6000) 
         double precision energy
         open(7,file='./photout.dat',status='old')
         open(11,file='./gauss.in',status='old')

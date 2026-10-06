@@ -1,4 +1,10 @@
-kronos v3.0
+Kronos v3.1
+
+5/3/17 PDM:
+	-Sort TeX file by photon energies 
+	-Changed input file to gauss to provide spectrum for greater energies
+	-Fixed memory fault in gauss.f
+	-Add method (and distribution function, if applicable) to output filenames
 
 2/7/17 PDM:
 	Major Overhaul of Code:

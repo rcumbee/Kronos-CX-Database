@@ -4,14 +4,14 @@
 #
 #    Copyright 2017 P. D. Mullen, R. S. Cumbee, P. C. Stancil
 #
-#                        Kronos version 3.0   (released Feb 7, 2017)
+#                        Kronos version 3.1   (released May 16, 2017)
 #
 #    This file is part of Kronos. Kronos is a series of python and fortran codes 
 #    utilizing a comprehensive charge exchange database at its backbone to generate 
 #    theoretical line ratios and spectra for many single electron capture systems. 
 #
 #    You are morally obligated to cite the following paper in his/her
-#    scientific literature that results from use of any part of HAM:
+#    scientific literature that results from use of any part of Kronos:
 #
 #    [1] Mullen et al. (2016), ApJS 224, 31
 #    [2] Cumbee et al. (2017), ApJ, in prep
@@ -34,7 +34,7 @@
 #
 ##################################################################################
 
-# Add source directory of cx_functions and import
+#Add source directory of cx_functions and import
 import sys
 sys.path.append('./src/')
 from cx_functions import *

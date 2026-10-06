@@ -5,14 +5,14 @@
 #
 #    Copyright 2017 P. D. Mullen, R. S. Cumbee, P. C. Stancil
 #
-#                        Kronos version 3.0   (released Feb 7, 2017)
+#                        Kronos version 3.1   (released May 16, 2017)
 #
 #    This file is part of Kronos. Kronos is a series of python and fortran codes 
 #    utilizing a comprehensive charge exchange database at its backbone to generate 
 #    theoretical line ratios and spectra for many single electron capture systems. 
 #
 #    You are morally obligated to cite the following paper in his/her
-#    scientific literature that results from use of any part of HAM:
+#    scientific literature that results from use of any part of Kronos:
 #
 #    [1] Mullen et al. (2016), ApJS 224, 31
 #    [2] Cumbee et al. (2017), ApJ, in prep
@@ -193,7 +193,6 @@ def availabilityCheck():
 	if checkMOCC == "Yes": method = "mocc" 
 	if checkQMOCC == "Yes": method = "qmocc"
 	if checkRCMD == "Yes": method = "rcmd"
-
 
 	#Check if method was manually set
 	if methodCheck != None:
@@ -382,7 +381,7 @@ def doCascade():
 def makeSpectrum():
 	#Create gauss.in file for gauss.f
 	gaussFile = open("./gauss.in", "w")
-	gaussFile.write(str(resolution) + "\t" + str(numberOfPoints) + "\t" + "0.d0" + "\t" + "1000.d0" + "\n")
+	gaussFile.write(str(resolution) + "\t" + str(numberOfPoints) + "\t" + "0.d0" + "\t" + "10000.d0" + "\n")
 	gaussFile.close()
 
 	#Compile and Run gauss
@@ -425,11 +424,11 @@ def lineRatios():
 		ni,li,si,nf,lf,sf,energy,line,linenorm = loadtxt("./phot.dat",dtype=str, unpack=True,\
 			usecols=[0,1,2,4,5,6,8,9,11])
 		transition=[(i+j+k+l+m+n) for i,j,k,l,m,n in zip(ni,li,si,nf,lf,sf)]
-	CascadeData = sorted(zip(transition, energy, line, linenorm), key=lambda x: x[0])
+	CascadeData = sorted(zip(transition, energy, line, linenorm), key=lambda x: x[1])
 	CascadeData = [(dict[i[0]],i[1],i[2],i[3]) if i[0] in dict else (i[0],i[1],i[2],i[3]) for i in CascadeData]
 
 	#Write Line Ratios File
-	lineRatiosFile = open("./line_ratios.dat","w")
+	lineRatiosFile = open("line_ratios.dat","w")
 	lineRatiosFile.write("#Collision Energy = " + str(closestCollEnergy[1]) + " eV/u" + "\t" + \
 		"Collision Velocity = " + str(convertSpeed(closestCollEnergy[1])) + "\n")
 	lineRatiosFile.write("#Method = " + method.upper() + "\n")
@@ -444,11 +443,11 @@ def lineRatios():
 
 	#Write Latex Table
 	shutil.copyfile("../src/aastex.cls", "./aastex.cls")
-	texFile = open("./line_ratios.tex","w")
+	texFile = open("line_ratios.tex", "w")
 
 	#Preamble and Begin Table
 	texFile.write("\\documentclass{aastex}"+"\n"+"\\begin{document}"+"\n"+"\\begin{deluxetable}{cccc}"+"\n"+\
-		"\\tablecolumns{4}"+"\n"+"\\tablewidth{0pc}"+"\n"+"\\tablecaption{"+projectile.upper()+" " +\
+		"\\tablecolumns{4}"+"\n"+"\\tablewidth{0pc}"+"\n"+"\\tablecaption{"+projectile.title() +" " +\
 		int_to_roman(charge)+" "+method.upper()+" Line Ratios for "+target+" Targets}" +\
 		"\\tablehead{\multicolumn{4}{c}{Collision Energy = "+"%.1f" % float(closestCollEnergy[1])+\
 		" eV/u $\\vert$ Collsion Velocity = "+"%.1f" % float(convertSpeed(closestCollEnergy[1]))+" km/s}"+\
@@ -504,8 +503,16 @@ def moveFiles():
 	#Move Files to this Directory
 	for filename in os.listdir("."):
 		if filename.endswith(".dat"):
-			shutil.move(filename, resultsTree + "/../")
-		if filename.endswith(".pdf") or filename.endswith(".tex") or filename.endswith(".cls"):
+			if method == "mclz" and collisionType == "bare":
+				shutil.move(filename, resultsTree + "/../" + filename[:-4] + "_" + method + "_" + distro + ".dat")
+			else:
+				shutil.move(filename, resultsTree + "/../" + filename[:-4] + "_" + method + ".dat")
+		if filename.endswith(".pdf") or filename.endswith(".tex"):
+			if method == "mclz" and collisionType == "bare":
+				shutil.move(filename, resultsTree + "/" + filename[:-4] + "_" + method + "_" + distro + filename[-4:])
+			else:
+				shutil.move(filename, resultsTree + "/" + filename[:-4] + "_" + method + filename[-4:])
+		if filename.endswith(".cls"):
 			shutil.move(filename, resultsTree)
 
 def deleteBin():
