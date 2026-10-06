@@ -1,6 +1,38 @@
 # corrections.dat -- corrections applied to this Kronos v3 database (newest first).
 # Each entry: date, what changed and why, source, files.
 
+2026-10-06  Kronos v3.3: published data added that v3.2 did not contain
+----------------------------------------------------------------------------------------------------
+All new files are in the usual CXDatabase/Projectile_Ions/<El>/Charge/<q>/Targets/<Target>/ folders. Systems whose product ion has
+no radrathe.dat in this release (Mg8+, Mg9+, Mg10+, Ne8+, Fe8+, Fe9+) carry their cross sections and level list only:
+Kronos cannot run a cascade for them until a radrathe.dat is added.
+
+D. Lyons' MCLZ cross sections: Mg8+, Mg9+, Mg10+, Ne8+ + H, He (D. Lyons, R. S. Cumbee & P. C. Stancil 2017, ApJS 232, 27) and
+Fe8+, Fe9+ + H, He, H2, H2O, CO, CO2, N2 (D. Lyons 2019, PhD dissertation, University of Georgia, ch. 4). Files: <ion>+<target>
+_sec_mclz.cs (nl), _sec_mclz_nres.cs (n), Lyons' <ion>.nist.in. Changes (data rows unchanged): header line 5 = published reference;
+labels converted to ASCII (superscripts -> digits, degree sign -> o, 1/2, "." between orbitals, e.g. 2s.2p(3Po).4d(2Fo)); label
+fixes Mg8+ 2s2.5f(2D) -> 5f(2F) (typo, also in the dissertation figures), Fe9+ 58F -> 8f, Fe8+ 3p66g(2) -> 3p6.6g(2G); Fe9+ + H
+three-line label header merged into one (3p(oS) = 3s2.3p6(1S)). Mg9+ + H: Lyons gave singlets and triplets in separate files;
+mg9+h_sec_mclz.cs is their combination (columns concatenated, totals summed; weights already in the files; equals Lyons'
+n-resolved total); the separate files are not included. Mg10+ nl and Ne8+ files are the cleaned copies of the cxdatabase GitHub repository (same data).
+Notes: Lyons used every level NIST lists, so the Mg8+/Mg9+ files include excited-core states (2s.2p nl, 2p2 nl, 1s2.2p nl); for
+Mg8+ + He these carry ~2/3 of the cross section at 1 keV/u. Fe9+: n = 3-4 levels from NIST with full terms (some jK); for n >= 5
+only the singlet and triplet term with L = l per nl (hand-adjusted quantum defects, dissertation Tables 4.4-4.6), so the nl split is
+not fully term-resolved (totals and n complete). Fe8+: one term per nl (correct for the 3p6 core) plus some excited-core states.
+
+P. D. Mullen et al. 2017, ApJ 844, 7: bare-ion MCLZ with O and OH, n-resolved (C6+, N7+, O8+, Ne10+, Na11+, Mg12+, Al13+, Si14+;
+header said "Patrick Mullen et al. 2016, to be submitted", now the published reference; data unchanged); level lists copied from
+each projectile's H folder.
+
+Published non-MCLZ data for systems that also have MCLZ data (cxdatabase repository copies, corrected headers): Ne10+ + He AOCC
+(Liu, Wang & Janev 2014, PRA 89, 012710), TC-BGM (Leung & Kirchner 2016, PRA 93, 052710), CDW n-resolved (Gulyas & Fainstein 2002);
+O8+ + H QMOCC (Harel, Jouin & Pons 1998, ADNDT 68, 279).
+Not included: data published after 2017 or not yet published ("to be submitted"); Lyons' l-distribution (_stat, _lowe) files;
+non-MCLZ data for systems without MCLZ data (e.g. Ne10+ + Ne, Ar TC-BGM/AOCC, O6+ + H RCMD).
+Included as data that this Kronos version cannot run: the single-energy Ne10+ + He AOCC and TC-BGM files, Ne10+ + He CDW, and
+O8+ + H QMOCC (labels without term). Ne10+ + He: run Kronos with -M mclz (without -M it picks the AOCC file).
+All calculations in this database are under review for Kronos v3.4.
+
 2026-10-05  Cl16+ + H removed (user)
 ----------------------------------------------------------------------------------------------------
 CXDatabase/Projectile_Ions/Cl/Charge/16 (Targets/H: cl16+h_sec_mclz.cs "RCumbee et al. 2017, to be submitted", cl16.nist.in,
