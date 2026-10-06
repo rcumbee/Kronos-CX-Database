@@ -4,13 +4,24 @@
 \margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
-\f0\fs24 \cf0 kronos v2.61\
+\f0\fs24 \cf0 kronos v2.62\
+\
+12/29/2016 RSC: \
+	initmaker_h.py: produced normalized and non-normalized inith files.  \
+			Added ascentcrossnorm with ascentcross and\
+				CROSSSECSnorm with CROSSSECS\
+	radcas_h.f: Edited to read in normalized and non-normalized cross sections, apply cascade to 			both, and output files include both normalized and non-normalized ratios. \
+			the second column is non-normalized, and the third column is normalized. \
+			the non-normalized data will be used to produce the spectrum. \
+           zeus_h.py     Edited to read in the non-normalized intensity (intens) and to produce the line 			ratios both normalized and non-normalized by adding in \'93intens" wherever 			\'93relative\'94 is. \
+			Edited the .dat and .tex files to include these line ratios.\
+	kronos.py: Edited initial resolution to 10 eV\
+\
 \
 10/15/2016: RSC: Edited Kronos.py to include the method for He-like collisions data files\
 		        Lines 441- 446, 448, 449, 451, 465-474 added \'91+ str(method) +\'92\
 		        line 462: Added + ' -M ' + str(method) \
 		        Edited Zeus_he.py to include the Method for the line ratio pdf file\
 		        lines 24, 33, 145\
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
-\cf0 		        Edited Zeus_h.py to include the Method & distribution for the line ratio pdf file\
+		        Edited Zeus_h.py to include the Method & distribution for the line ratio pdf file\
 		        lines 25, 35-37, 131, 149}

@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-# Developed by: Patrick Mullen 
+# Developed by: Patrick Mullen
 #######################################################################
 
 from pylab import *
@@ -51,6 +51,7 @@ CXSTRINGS = x.replace(",", "      ")
 CXSTRINGS = CXSTRINGS.split()
 
 CROSSSECS = y.split()
+CROSSSECSnorm = list(CROSSSECS)
 
 CXSTRINGS.remove('#')
 CXSTRINGS.remove('(eV/u)')
@@ -79,11 +80,13 @@ for i in range(0, len(almostlist)):
 	finallist.append(str(almostlist[i]) + '(2' + str(almostlist[i][-1]).capitalize() + ')')
 
 for i in range(0, len(CROSSSECS)):
-	CROSSSECS[i] = float(CROSSSECS[i])/float(CROSSSECS[-1])
-#	CROSSSECS[i] = float(CROSSSECS[i])/float(1.0)
+	CROSSSECSnorm[i] = float(CROSSSECS[i])/float(CROSSSECS[-1])
+	CROSSSECS[i] = float(CROSSSECS[i])/float(1.0)
 
 del CROSSSECS[0]
 del CROSSSECS[-1]
+del CROSSSECSnorm[0]
+del CROSSSECSnorm[-1]
 
 dict = {'s':'0', 'p':'1', 'd':'2', 'f':'3', 'g':'4', 'h':'5', 'i':'6', 'k':'7', 'l':'8', 'm':'9', 'n':'10', 'o':'11', 'q':'12', 'r':'13', 't':'14', '1':'0', '3':'1'}
 
@@ -93,6 +96,7 @@ slist = list()
 tobe = list()
 ascent = list()
 ascentcross = list()
+ascentcrossnorm = list()
 indexing = list()
 
 for i in range(0, len(finallist)):
@@ -106,6 +110,7 @@ for i in range(0, len(nlist)):
 
 ascent.sort()
 ascentcross = [x for (y,x) in sorted(zip(tobe,CROSSSECS))]
+ascentcrossnorm = [x for (y,x) in sorted(zip(tobe,CROSSSECSnorm))]
 
 for i in range(0, len(tobe)):
 	indexing.append(tobe.index(ascent[i]))
@@ -122,11 +127,10 @@ outputfile.close()
 
 outputfile = open('inith.dat', 'w')
 for i in range(0, len(indexing)):
-	outputfile.write(str(nlist[indexing[i]]) + '\t' + str(llist[indexing[i]]) + '\t' + str(ascentcross[i]) + '\n')
-outputfile.write(str(int(100.0)) + '\t' + '0' + '\t'  + '0' + '\t' + '0.0d0' + '\n')
+	outputfile.write(str(nlist[indexing[i]]) + '\t' + str(llist[indexing[i]]) + '\t' + str(ascentcross[i]) +  '\t' + str(ascentcrossnorm[i]) + '\n')
+outputfile.write(str(int(100.0)) + '\t' + '0' + '\t'  + '0' + '\t' + '0.0d0' + '\t' + '0.0d0' + '\n')
 outputfile.write(str(charge) + '\t' + str(rmax) + '\t' + str(closest[1]) + '\t' + str(excites[-1] * float(-1.23984E-4)))
 outputfile.close()
 
+
 #######################################################################
-
-

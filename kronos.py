@@ -35,7 +35,7 @@ collenergy = args.collisionenergy
 methodcheck = str(args.method)
 graphcheck = str(args.graph)
 if args.resolution == None:
-	resolution = 150.0
+	resolution = 10.0
 else:
 	resolution = float(args.resolution)
 if args.numberofpoints == None:

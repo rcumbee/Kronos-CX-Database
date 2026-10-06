@@ -58,7 +58,7 @@ def convertspeed(E):
 	return z
 
 lineslist = list()
-
+# filename is photh_method.dat
 f = open(filename, 'r')
 for line in f:
 	lineslist.append(line)
@@ -77,19 +77,21 @@ for i in range(0, len(lineslist)):
 	f.write(lineslist[i] + '\n')
 f.close()
 
-initial, final, photenergy, relative = loadtxt('hephaistus.dat', dtype=str, unpack = True, usecols=[0,1,2,-1])
+initial, final, photenergy, relative,intens = loadtxt('hephaistus.dat', dtype=str, unpack = True, usecols=[0,1,2,3,4])
 
-os.remove('hephaistus.dat')
+#os.remove('hephaistus.dat')
 
 initial = initial.tolist()
 final = final.tolist()
 photenergy = photenergy.tolist()
 relative = relative.tolist()
+intens = intens.tolist()
 
 if len(initial) > 1:
 	initial.reverse()
 	final.reverse()
 	photenergy.reverse()
+	intens.reverse()
 	relative.reverse()
 
 dict = {'21':'Lyman alpha', '31':'Lyman beta ', '41':'Lyman gamma', '51':'Lyman delta', '61':'Lyman epsilon', '71':'Lyman zeta', '81':'Lyman eta', '91':\
@@ -106,16 +108,16 @@ for i in range(0, len(indices)):
 if len(initial) > 1:
 	outputfile = open('LineRatios.dat', 'w')
 	outputfile.write('#Collision Energy = ' + str(CollisionEnergy) + ' eV/u   Collision Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s '+'\n')
-	outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Line Ratio' + '\n')
+	outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Normalized Line Ratio' +'\t' + 'Line Ratio' '\n')
 	for i in range(0, len(tags)):
-		outputfile.write(str(photenergy[indices[i]]) + '\t' + str(tags[i]) + '\t' + relative[indices[i]] + '\n')
+		outputfile.write(str(photenergy[indices[i]]) + '\t' + str(tags[i]) + '\t' + relative[indices[i]] + '\t' + intens[indices[i]] + '\n')
 	outputfile.close()
 else:
 	outputfile = open('LineRatios.dat', 'w')
 	outputfile.write('#Collision Energy = ' + str(CollisionEnergy) + ' eV/u   Collision Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s '+'\n')
-	outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Line Ratio' + '\n')
+	outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Normalized Line Ratio' +'\t' + 'Line Ratio'+'\n')
 	for i in range(0, len(tags)):
-		outputfile.write(str(photenergy) + '\t' + str(tags[i]) + '\t' + str(relative) + '\n')
+		outputfile.write(str(photenergy) + '\t' + str(tags[i]) + '\t' + str(relative) + '\t' + str(intens) + '\n')
 	outputfile.close()
 
 for i in range(0, len(tags)):
@@ -125,14 +127,14 @@ if len(initial) > 1:
 	outputfile = open('LineRatios.tex', 'w')
 	outputfile.write('\documentclass{aastex}' + '\n')
 	outputfile.write('\\begin{document}' + '\n')
-	outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
-	outputfile.write('\\tablecolumns{3}' + '\n')
+	outputfile.write('\\begin{deluxetable}{cccc}' + '\n')
+	outputfile.write('\\tablecolumns{4}' + '\n')
 	outputfile.write('\\tablewidth{0pc}' + '\n')
 	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets  using the '  + str(method) + ' ' + str(distribution) + ' ' + 'method}' + '\n')
-	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
+	outputfile.write('\\tablehead{\multicolumn{4}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio} & \colhead{Line Ratio Normalized}}')
 	outputfile.write('\startdata' + '\n')
 	for i in range(0, len(tags)):
-		outputfile.write('%.2f' % float(photenergy[indices[i]]) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative[indices[i]]) + '\t' + '\\' + '\\' + '\n')
+		outputfile.write('%.2f' % float(photenergy[indices[i]]) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative[indices[i]]) + '   &   ' +  '%.4f' % float(intens[indices[i]]) + '\t' + '\\' + '\\' + '\n')
 	outputfile.write('\\' + '\\' + '\n')
 	outputfile.write('\hline' + '\n')
 	outputfile.write('\enddata' + '\n')
@@ -143,14 +145,14 @@ else:
 	outputfile = open('LineRatios.tex', 'w')
 	outputfile.write('\documentclass{aastex}' + '\n')
 	outputfile.write('\\begin{document}' + '\n')
-	outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
-	outputfile.write('\\tablecolumns{3}' + '\n')
+	outputfile.write('\\begin{deluxetable}{cccc}' + '\n')
+	outputfile.write('\\tablecolumns{4}' + '\n')
 	outputfile.write('\\tablewidth{0pc}' + '\n')
 	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets using the '  + str(method) + ' ' + str(distribution) + ' ' + 'method}' + '\n')
-	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
+	outputfile.write('\\tablehead{\multicolumn{4}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}& \colhead{Line Ratio Normalized}}')
 	outputfile.write('\startdata' + '\n')
 	for i in range(0, len(tags)):
-		outputfile.write('%.2f' % float(photenergy) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative) + '\t' + '\\' + '\\' + '\n')
+		outputfile.write('%.2f' % float(photenergy) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative) + '   &   ' +  '%.4f' % float(intens[indices[i]]) + '\t' + '\\' + '\\' + '\n')
 	outputfile.write('\\' + '\\' + '\n')
 	outputfile.write('\hline' + '\n')
 	outputfile.write('\enddata' + '\n')

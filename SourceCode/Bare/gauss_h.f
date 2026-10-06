@@ -16,8 +16,8 @@ c output - photline.dat - normalized line     c
 c          spectrum                           c
 ccccccccccccccccccccccccccccccccccccccccccccccc   
 c
-      implicit real*8(a-h,o-z)
-          dimension ephot(1000), rad(1000) 
+        implicit real*8(a-h,o-z)
+        dimension ephot(1000), rad(1000) 
         double precision energy
         open(7,file='photouth.dat',status='old')
         open(11,file='SourceCode/Bare/gauss.in',status='old')
