@@ -3,15 +3,15 @@
 
 ###################################################################
 
-# Necessary imports are made here.
+# Necessary imports are made here.  
 
 from pylab import *
-import argparse
+import argparse 
 import os
 
 ###################################################################
 
-# This provides feedback to the user that the program has initialized.
+# This provides feedback to the user that the program has initialized.  
 
 print '...Creating Latex Figure and PDF'
 
@@ -59,14 +59,14 @@ for line in f:
 del lineslist[-1]
 del lineslist[-1]
 
-for i in range(0, len(lineslist)):
+for i in range(0, len(lineslist)): 
 	lineslist[i] = lineslist[i].replace('phot(eV)=', '\t', 10)
 	lineslist[i] = lineslist[i].replace('-->', '\t', 10)
 	lineslist[i] = lineslist[i].replace('relat=', '\t', 10)
 	lineslist[i] = lineslist[i].replace('\n', '\t', 10)
 
 f = open('hephaistus.dat', 'w')
-for i in range(0, len(lineslist)):
+for i in range(0, len(lineslist)): 
 	f.write(lineslist[i] + '\n')
 f.close()
 
@@ -140,14 +140,14 @@ outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
 outputfile.write('\\tablecolumns{3}' + '\n')
 outputfile.write('\\tablewidth{0pc}' + '\n')
 outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets}' + '\n')
-outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + '\colhead{Emission Line} & \colhead{Photon Energy (eV)} &  \colhead{Line Ratio}}')
+outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
 outputfile.write('\startdata' + '\n')
 for i in range(0, len(finaltags)):
-	outputfile.write(str(finaltags[i][0:-1]) + '$ ' + str(finaltags[i][-1]) + ' &   ' +'%.2f' % float(photenergy[finalindex[i]]) + '   &   ' +   '%.4f' % float(relative[finalindex[i]]) + '\t' + '\\' + '\\' + '\n')
+	outputfile.write('%.2f' % float(photenergy[finalindex[i]]) + '   &   ' + str(finaltags[i][0:-1]) + '$ ' + str(finaltags[i][-1]) + ' &   ' +  '%.4f' % float(relative[finalindex[i]]) + '\t' + '\\' + '\\' + '\n')
 outputfile.write('\\' + '\\' + '\n')
 outputfile.write('\hline' + '\n')
 outputfile.write('\enddata' + '\n')
-outputfile.write('\end{deluxetable}' + '\n')
+outputfile.write('\end{deluxetable}' + '\n') 
 outputfile.write('\end{document}')
 outputfile.close()
 

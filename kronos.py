@@ -13,8 +13,7 @@ parser.add_argument("-I", "--projectile", help="Specify Projectile Ion -- Requir
 parser.add_argument("-Z", "--charge", help="Specify Projectile Charge -- Required", required=True)
 parser.add_argument("-A", "--target", help="Specify Target Neutral -- Required", required=True)
 parser.add_argument("-E", "--collisionenergy", help="Specify Collision Energy in eV/u -- Required", required=True)
-parser.add_argument("-D", "--distribution", help="Choose lowe or stat distribution -- Only Required for MCLZ bare ion \
-	collisions", required=False)
+parser.add_argument("-D", "--distribution", help="Choose lowe or stat distribution -- Only Required for MCLZ bare ion collisions", required=False)
 parser.add_argument("-R", "--resolution", help="Specify the FWHM Resolution in eV -- Optional", required=False)
 parser.add_argument("-P", "--numberofpoints", help="Specify number of data points -- Optional", required=False)
 parser.add_argument("-N", "--name", help="Specify Your Name -- Optional", required=False)
@@ -315,90 +314,92 @@ if barisity == 'bare':
 	os.remove('fort.25')
 	os.remove('fort.35')
 	os.remove('fort.90')
+	closestenergy = loadtxt('closestenergy.dat', unpack = True, dtype=float)
+	os.remove('closestenergy.dat')
+	collenergy=closestenergy
 	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge))
 	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target))
-	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
-		'eV_FWHM')
-	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM')
+	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 		'eV_FWHM/TeX-Table/')
 	if method == 'mclz':
-		os.system('mv cevolh.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) \
+		os.system('mv cevolh.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) \
 			+ 'eV_FWHM/cevolh_' + str(method) + '_' + str(distro) +'.dat')
-		os.system('mv photh.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv photh.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/photh_' +str(method) + '_' + str(distro) +'.dat')
-		os.system('mv phot1h.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv phot1h.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/phot1h_' + str(method) + '_' + str(distro)+ '.dat')
-		os.system('mv photline.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) +\
+		os.system('mv photline.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) +\
 		 'eV_FWHM/photline_' +str(method) + '_' + str(distro) + '.dat')
-		os.system('mv photouth.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv photouth.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/photouth_' + str(method) + '_' + str(distro)+ '.dat')
-		os.system('mv ratios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv ratios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/ratios_' + str(method) + '_' + str(distro)+ '.dat')
-		os.system('mv spectrum.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv spectrum.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/spectrum_' + str(method) + '_' + str(distro) + '.dat')
-		os.system('mv SourceCode/Bare/inith.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + \
+		os.system('mv SourceCode/Bare/inith.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + \
 			str(resolution) + 'eV_FWHM/inith_' + str(method) + '_' + str(distro) +  '.dat')
-		x,y = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/spectrum_' \
+		x,y = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + 'eV_FWHM/spectrum_' \
 			+ str(method) + '_' + str(distro) + '.dat', dtype = float, unpack = True, usecols=[0,1])
-		z,xi = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/photline_' + \
+		z,xi = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + 'eV_FWHM/photline_' + \
 			str(method) + '_' + str(distro) + '.dat', dtype = float, unpack = True, usecols=[0,1])
 	else:
-		os.system('mv cevolh.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) \
+		os.system('mv cevolh.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) \
 			+ 'eV_FWHM/cevolh_' + str(method) +'.dat')
-		os.system('mv photh.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv photh.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/photh_' +str(method) +'.dat')
-		os.system('mv phot1h.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv phot1h.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/phot1h_' + str(method)+ '.dat')
-		os.system('mv photline.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) +\
+		os.system('mv photline.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) +\
 		 'eV_FWHM/photline_' +str(method) + '.dat')
-		os.system('mv photouth.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv photouth.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/photouth_' + str(method)+ '.dat')
-		os.system('mv ratios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv ratios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/ratios_' + str(method)+ '.dat')
-		os.system('mv spectrum.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv spectrum.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/spectrum_' + str(method) + '.dat')
-		os.system('mv SourceCode/Bare/inith.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + \
+		os.system('mv SourceCode/Bare/inith.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + \
 			str(resolution) + 'eV_FWHM/inith_' + str(method) +  '.dat')
-		x,y = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/spectrum_' \
+		x,y = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + 'eV_FWHM/spectrum_' \
 			+ str(method) + '.dat', dtype = float, unpack = True, usecols=[0,1])
-		z,xi = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/photline_' + \
+		z,xi = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + 'eV_FWHM/photline_' + \
 			str(method) + '.dat', dtype = float, unpack = True, usecols=[0,1])		
 	plot(x, y)
 	vlines(z, [0], xi)
 	legend(['spectrum.dat', 'photline.dat'])
 	suptitle('Projectile Ion: ' + str(projectile) + '   '  'Charge: ' + str(charge) + '   ' + 'Target: ' + str(target) + '   ' + 'Collision Energy: ' + \
-		str(collenergy) + ' eV/u' + '   ' + 'FWHM Resolution: ' + str(resolution) + ' eV')
+		'%s' % float('%.5g' % float(collenergy))  + ' eV/u' + '   ' + 'FWHM Resolution: ' + str(resolution) + ' eV')
 	xlabel('Photon Energy (eV)')
 	ylabel('Relative Intensty (Arbitrary)')
 	print '\n'
 	os.system('cp SourceCode/Bare/aastex.cls aastex.cls')
 	if method == 'mclz':
 		os.system('python SourceCode/Bare/zeus_h.py -I' + str(projectile) + ' -Z ' + str(charge) + ' -A ' + str(target) + ' -E ' + str(collenergy) + ' -F Results/' \
-			+ str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) \
+			+ str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  \
 			+ 'eV-u@' + str(resolution) + 'eV_FWHM/phot1h_' + str(method) + '_' + str(distro)+ '.dat')
-		os.system('mv LineRatios.aux Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.aux Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '_' + str(distro) + '.aux')
-		os.system('mv LineRatios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/LineRatios_' + str(method) + '_' + str(distro) + '.dat')
-		os.system('mv LineRatios.log Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.log Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '_' + str(distro) + '.log')
-		os.system('mv LineRatios.pdf Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.pdf Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '_' + str(distro) + '.pdf')
-		os.system('mv LineRatios.tex Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.tex Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '_' + str(distro) + '.tex')
 	else:
-		os.system('./SourceCode/Bare/zeus_h.py -I' + str(projectile) + ' -Z ' + str(charge) + ' -A ' + str(target) + ' -E ' + str(collenergy) + ' -F Results/' \
-			+ str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) \
+		os.system('./SourceCode/Bare/zeus_h.py -I' + str(projectile) + ' -Z ' + str(charge) + ' -A ' + str(target) + ' -E ' + '%s' % float('%.5g' % float(collenergy))  + ' -F Results/' \
+			+ str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  \
 			+ 'eV-u@' + str(resolution) + 'eV_FWHM/phot1h_' + str(method)+ '.dat')
-		os.system('mv LineRatios.aux Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.aux Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '.aux')
-		os.system('mv LineRatios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/LineRatios_' + str(method) + '.dat')
-		os.system('mv LineRatios.log Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.log Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '.log')
-		os.system('mv LineRatios.pdf Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.pdf Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '.pdf')
-		os.system('mv LineRatios.tex Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+		os.system('mv LineRatios.tex Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy))  + 'eV-u@' + str(resolution) + \
 			'eV_FWHM/TeX-Table/LineRatios_' + str(method) + '.tex')
 	os.remove('aastex.cls')
 	print '\n'
@@ -430,38 +431,41 @@ if barisity == 'nonbare':
 	os.system('./SourceCode/NonBare/gauss_he')
 	os.remove('fort.33')
 	os.remove('SourceCode/NonBare/radrathe.dat')
+	closestenergy = loadtxt('closestenergy.dat', unpack = True, dtype=float)
+	os.remove('closestenergy.dat')
+	collenergy=closestenergy
 	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge))
 	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target))
-	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM')
-	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/TeX-Table/')
-	os.system('mv cevolhe.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/cevolhe.dat')
-	os.system('mv phothe.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/phothe.dat')
-	os.system('mv photline.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/photline.dat')
-	os.system('mv photout.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/photout.dat')
-	os.system('mv ratios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/ratios.dat')
-	os.system('mv spectrum.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/spectrum.dat')
-	os.system('mv SourceCode/NonBare/inithe.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + \
+	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM')
+	os.system('mkdir -p Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/TeX-Table/')
+	os.system('mv cevolhe.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/cevolhe.dat')
+	os.system('mv phothe.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/phothe.dat')
+	os.system('mv photline.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/photline.dat')
+	os.system('mv photout.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/photout.dat')
+	os.system('mv ratios.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/ratios.dat')
+	os.system('mv spectrum.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/spectrum.dat')
+	os.system('mv SourceCode/NonBare/inithe.dat Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + \
 		'eV_FWHM/inithe.dat')
-	x,y = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/spectrum.dat', dtype = float, \
+	x,y = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/spectrum.dat', dtype = float, \
 		unpack = True, usecols=[0,1])
-	z,xi = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/photline.dat', dtype = float, \
+	z,xi = loadtxt('Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/photline.dat', dtype = float, \
 		unpack = True, usecols=[0,1])
 	plot(x, y)
 	vlines(z, [0], xi)
 	legend(['spectrum.dat', 'photline.dat'])
-	suptitle('Projectile Ion: ' + str(projectile) + '   '  'Charge: ' + str(charge) + '   ' + 'Target: ' + str(target) + '   ' + 'Collision Energy: ' + str(collenergy) + ' eV/u' + '   ' \
+	suptitle('Projectile Ion: ' + str(projectile) + '   '  'Charge: ' + str(charge) + '   ' + 'Target: ' + str(target) + '   ' + 'Collision Energy: ' + '%s' % float('%.5g' % float(collenergy)) + ' eV/u' + '   ' \
 		+ 'FWHM Resolution: ' + str(resolution) + ' eV')
 	xlabel('Photon Energy (eV)')
 	ylabel('Relative Intensity (Arbitrary)')
 	print '\n'
 	os.system('cp SourceCode/NonBare/aastex.cls aastex.cls')
-	os.system('python SourceCode/NonBare/zeus_he.py -I' + str(projectile) + ' -Z ' + str(charge) + ' -A ' + str(target) + ' -E ' + str(collenergy) + ' -F Results/' + str(projectile) + '_' + \
-		str(charge) + '/' + str(target) + '/' + str(collenergy) \
+	os.system('python SourceCode/NonBare/zeus_he.py -I' + str(projectile) + ' -Z ' + str(charge) + ' -A ' + str(target) + ' -E ' + '%s' % float('%.5g' % float(collenergy)) + ' -F Results/' + str(projectile) + '_' + \
+		str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) \
 		+ 'eV-u@' + str(resolution) + 'eV_FWHM/phothe.dat')
-	os.system('mv Line* Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/TeX-Table/')
-	os.system('mv Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/TeX-Table/LineRatios.dat Results/' + \
+	os.system('mv Line* Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/TeX-Table/')
+	os.system('mv Results/' + str(projectile) + '_' + str(charge) + '/' + str(target) + '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/TeX-Table/LineRatios.dat Results/' + \
 		str(projectile) + '_' + str(charge) + '/' + str(target) \
-		+ '/' + str(collenergy) + 'eV-u@' + str(resolution) + 'eV_FWHM/LineRatios.dat')
+		+ '/' + '%s' % float('%.5g' % float(collenergy)) + 'eV-u@' + str(resolution) + 'eV_FWHM/LineRatios.dat')
 	os.remove('aastex.cls')
 	print '\n'
 	print "...Successfully Exiting Kronos."

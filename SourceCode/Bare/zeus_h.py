@@ -124,7 +124,7 @@ if len(initial) > 1:
 	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
 	outputfile.write('\startdata' + '\n')
 	for i in range(0, len(tags)):
-		outputfile.write(str(tags[i]) + '$   &   ' +'%.2f' % float(photenergy[indices[i]]) + '   &   ' +   '%.4f' % float(relative[indices[i]]) + '\t' + '\\' + '\\' + '\n')
+		outputfile.write('%.2f' % float(photenergy[indices[i]]) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative[indices[i]]) + '\t' + '\\' + '\\' + '\n')
 	outputfile.write('\\' + '\\' + '\n')
 	outputfile.write('\hline' + '\n')
 	outputfile.write('\enddata' + '\n')
@@ -139,7 +139,7 @@ else:
 	outputfile.write('\\tablecolumns{3}' + '\n')
 	outputfile.write('\\tablewidth{0pc}' + '\n')
 	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets}' + '\n')
-	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Emission Line} & \colhead{Photon Energy (eV)} &  \colhead{Line Ratio}}')
+	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
 	outputfile.write('\startdata' + '\n')
 	for i in range(0, len(tags)):
 		outputfile.write('%.2f' % float(photenergy) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative) + '\t' + '\\' + '\\' + '\n')

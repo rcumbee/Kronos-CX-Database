@@ -82,6 +82,12 @@ print '...Sum of normalized cross sections: ', sum(ascentcross)
 
 #######################################################################
 
+outputfile = open('closestenergy.dat', 'w')
+outputfile.write(str(closest[1]))
+outputfile.close()
+
+#######################################################################
+
 outputfile = open('inithe.dat', 'w')
 for i in range(0, len(indexing)):
 	outputfile.write(str(nlist[indexing[i]]) + '\t' + str(llist[indexing[i]]) + '\t' + str(dict[slist[indexing[i]]]) + '\t' + str(ascentcross[i]) + '\n')
