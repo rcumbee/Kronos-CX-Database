@@ -78,10 +78,11 @@ final = final.tolist()
 photenergy = photenergy.tolist()
 relative = relative.tolist()
 
-initial.reverse()
-final.reverse()
-photenergy.reverse()
-relative.reverse()
+if len(initial) > 1:
+	initial.reverse()
+	final.reverse()
+	photenergy.reverse()
+	relative.reverse()
 
 dict = {'21':'Lyman alpha', '31':'Lyman beta ', '41':'Lyman gamma', '51':'Lyman delta', '61':'Lyman epsilon', '71':'Lyman zeta', '81':'Lyman eta', '91':\
 'Lyman theta', '101':'Lyman iota', '111': 'Lyman kappa', '121': 'Lyman lambda', '131': 'Lyman mu', '141': 'Lyman nu', '151':'Lyman xi', '161': 'Lyman omicron',\
@@ -94,32 +95,59 @@ tags = list()
 for i in range(0, len(indices)):
 	tags.append(dict[initial[indices[i]] + final[indices[i]]])
 
-outputfile = open('LineRatios.dat', 'w')
-outputfile.write('#Collision Energy = ' + str(CollisionEnergy) + ' eV/u   Collision Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s '+'\n')
-outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Line Ratio' + '\n')
-for i in range(0, len(tags)):
-	outputfile.write(str(photenergy[indices[i]]) + '\t' + str(tags[i]) + '\t' + relative[indices[i]] + '\n')
-outputfile.close()
+if len(initial) > 1:
+	outputfile = open('LineRatios.dat', 'w')
+	outputfile.write('#Collision Energy = ' + str(CollisionEnergy) + ' eV/u   Collision Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s '+'\n')
+	outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Line Ratio' + '\n')
+	for i in range(0, len(tags)):
+		outputfile.write(str(photenergy[indices[i]]) + '\t' + str(tags[i]) + '\t' + relative[indices[i]] + '\n')
+	outputfile.close()
+else: 
+	outputfile = open('LineRatios.dat', 'w')
+	outputfile.write('#Collision Energy = ' + str(CollisionEnergy) + ' eV/u   Collision Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s '+'\n')
+	outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Line Ratio' + '\n')
+	for i in range(0, len(tags)):
+		outputfile.write(str(photenergy) + '\t' + str(tags[i]) + '\t' + str(relative) + '\n')
+	outputfile.close()
 
 for i in range(0, len(tags)):
 	tags[i] = tags[i].replace('Lyman ', 'Ly $\\')
 
-outputfile = open('LineRatios.tex', 'w')
-outputfile.write('\documentclass{aastex}' + '\n')
-outputfile.write('\\begin{document}' + '\n')
-outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
-outputfile.write('\\tablecolumns{3}' + '\n')
-outputfile.write('\\tablewidth{0pc}' + '\n')
-outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets}' + '\n')
-outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
-outputfile.write('\startdata' + '\n')
-for i in range(0, len(tags)):
-	outputfile.write('%.2f' % float(photenergy[indices[i]]) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative[indices[i]]) + '\t' + '\\' + '\\' + '\n')
-outputfile.write('\\' + '\\' + '\n')
-outputfile.write('\hline' + '\n')
-outputfile.write('\enddata' + '\n')
-outputfile.write('\end{deluxetable}' + '\n') 
-outputfile.write('\end{document}')
-outputfile.close()
+if len(initial) > 1:
+	outputfile = open('LineRatios.tex', 'w')
+	outputfile.write('\documentclass{aastex}' + '\n')
+	outputfile.write('\\begin{document}' + '\n')
+	outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
+	outputfile.write('\\tablecolumns{3}' + '\n')
+	outputfile.write('\\tablewidth{0pc}' + '\n')
+	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets}' + '\n')
+	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
+	outputfile.write('\startdata' + '\n')
+	for i in range(0, len(tags)):
+		outputfile.write(str(tags[i]) + '$   &   ' +'%.2f' % float(photenergy[indices[i]]) + '   &   ' +   '%.4f' % float(relative[indices[i]]) + '\t' + '\\' + '\\' + '\n')
+	outputfile.write('\\' + '\\' + '\n')
+	outputfile.write('\hline' + '\n')
+	outputfile.write('\enddata' + '\n')
+	outputfile.write('\end{deluxetable}' + '\n') 
+	outputfile.write('\end{document}')
+	outputfile.close()
+else:
+	outputfile = open('LineRatios.tex', 'w')
+	outputfile.write('\documentclass{aastex}' + '\n')
+	outputfile.write('\\begin{document}' + '\n')
+	outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
+	outputfile.write('\\tablecolumns{3}' + '\n')
+	outputfile.write('\\tablewidth{0pc}' + '\n')
+	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets}' + '\n')
+	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Emission Line} & \colhead{Photon Energy (eV)} &  \colhead{Line Ratio}}')
+	outputfile.write('\startdata' + '\n')
+	for i in range(0, len(tags)):
+		outputfile.write('%.2f' % float(photenergy) + '   &   ' + str(tags[i]) + '$   &   ' +  '%.4f' % float(relative) + '\t' + '\\' + '\\' + '\n')
+	outputfile.write('\\' + '\\' + '\n')
+	outputfile.write('\hline' + '\n')
+	outputfile.write('\enddata' + '\n')
+	outputfile.write('\end{deluxetable}' + '\n') 
+	outputfile.write('\end{document}')
+	outputfile.close()
 
 os.system('pdflatex LineRatios.tex >/dev/null')

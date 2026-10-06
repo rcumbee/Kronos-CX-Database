@@ -140,8 +140,12 @@ databasefiles = loadtxt('availability.txt', unpack = True, dtype=str)
 os.remove('availability.txt')
 lengthcheck = len('CXDatabase/Projectile_Ions/' + str(projectile) +  '/Charge/' + str(charge) + '/Targets/' + str(target) + '/' \
 	+ str(projectile.lower()) + str(charge) + '+' + str(target.lower()) + '_sec_')
-for i in range(0, len(databasefiles)):
-	methods.append(databasefiles[i][(int(lengthcheck)):(int(lengthcheck)+4)])
+
+if int(databasefiles.ndim) == 0:
+	methods.append(str(databasefiles)[(int(lengthcheck)):(int(lengthcheck)+4)])	
+else:
+	for i in range(0, len(databasefiles)):
+		methods.append(databasefiles[i][(int(lengthcheck)):(int(lengthcheck)+4)])
 
 check5 = 'mclz' in methods
 check6 = 'ctmc' in methods
