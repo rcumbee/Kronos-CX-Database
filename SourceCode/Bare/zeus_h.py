@@ -3,15 +3,15 @@
 
 ###################################################################
 
-# Necessary imports are made here.  
+# Necessary imports are made here.
 
 from pylab import *
-import argparse 
+import argparse
 import os
 
 ###################################################################
 
-# This provides feedback to the user that the program has initialized.  
+# This provides feedback to the user that the program has initialized.
 
 print '...Creating Line Ratio Table and TeX File/PDF'
 
@@ -21,6 +21,9 @@ parser.add_argument("-Z", '--charge' ,help="Specify Projectile Charge")
 parser.add_argument("-E", "--collisionenergy", help = "Specify the Collision Energy")
 parser.add_argument("-A", "--target", help = "Specify the Target")
 parser.add_argument("-F", "--filename", help = "Specify the Filename")
+parser.add_argument("-M", "--method", help="Specify method ")
+parser.add_argument("-D", "--distribution", default="toto",help="Choose lowe or stat distribution")
+
 args=parser.parse_args()
 
 CollisionEnergy = float(args.collisionenergy)
@@ -28,6 +31,11 @@ Projectile = str(args.projectile)
 Charge = int(args.charge)
 Target = str(args.target)
 filename = str(args.filename)
+method = str(args.method)
+distribution = str(args.distribution)
+if args.distribution == 'None':
+   distribution = ''
+
 
 ###################################################################
 
@@ -58,14 +66,14 @@ for line in f:
 del lineslist[-1]
 del lineslist[-1]
 
-for i in range(0, len(lineslist)): 
+for i in range(0, len(lineslist)):
 	lineslist[i] = lineslist[i].replace('phot(eV)=', '\t', 10)
 	lineslist[i] = lineslist[i].replace('-->', '\t', 10)
 	lineslist[i] = lineslist[i].replace('relat=', '\t', 10)
 	lineslist[i] = lineslist[i].replace('\n', '\t', 10)
 
 f = open('hephaistus.dat', 'w')
-for i in range(0, len(lineslist)): 
+for i in range(0, len(lineslist)):
 	f.write(lineslist[i] + '\n')
 f.close()
 
@@ -102,7 +110,7 @@ if len(initial) > 1:
 	for i in range(0, len(tags)):
 		outputfile.write(str(photenergy[indices[i]]) + '\t' + str(tags[i]) + '\t' + relative[indices[i]] + '\n')
 	outputfile.close()
-else: 
+else:
 	outputfile = open('LineRatios.dat', 'w')
 	outputfile.write('#Collision Energy = ' + str(CollisionEnergy) + ' eV/u   Collision Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s '+'\n')
 	outputfile.write('#Photon Energy (eV) ' + '\t' + 'Emission Line' + '\t' + 'Line Ratio' + '\n')
@@ -120,7 +128,7 @@ if len(initial) > 1:
 	outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
 	outputfile.write('\\tablecolumns{3}' + '\n')
 	outputfile.write('\\tablewidth{0pc}' + '\n')
-	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets}' + '\n')
+	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets  using the '  + str(method) + ' ' + str(distribution) + ' ' + 'method}' + '\n')
 	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
 	outputfile.write('\startdata' + '\n')
 	for i in range(0, len(tags)):
@@ -128,7 +136,7 @@ if len(initial) > 1:
 	outputfile.write('\\' + '\\' + '\n')
 	outputfile.write('\hline' + '\n')
 	outputfile.write('\enddata' + '\n')
-	outputfile.write('\end{deluxetable}' + '\n') 
+	outputfile.write('\end{deluxetable}' + '\n')
 	outputfile.write('\end{document}')
 	outputfile.close()
 else:
@@ -138,7 +146,7 @@ else:
 	outputfile.write('\\begin{deluxetable}{ccc}' + '\n')
 	outputfile.write('\\tablecolumns{3}' + '\n')
 	outputfile.write('\\tablewidth{0pc}' + '\n')
-	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets}' + '\n')
+	outputfile.write('\\tablecaption{' + str(Projectile) + ' ' + str(int_to_roman(int(Charge))) + ' Charge Exchange X-ray Emission with ' + str(Target) + ' Targets using the '  + str(method) + ' ' + str(distribution) + ' ' + 'method}' + '\n')
 	outputfile.write('\\tablehead{\multicolumn{3}{c}{Collision Energy = ' + str(CollisionEnergy)+ ' eV/u $\\vert$ Collsion Velocity = ' + '%.1f' % float(convertspeed(float(CollisionEnergy))) + ' km/s}' +  ' \\' + '\\' + ' \colhead{Photon Energy (eV)} & \colhead{Emission Line} & \colhead{Line Ratio}}')
 	outputfile.write('\startdata' + '\n')
 	for i in range(0, len(tags)):
@@ -146,7 +154,7 @@ else:
 	outputfile.write('\\' + '\\' + '\n')
 	outputfile.write('\hline' + '\n')
 	outputfile.write('\enddata' + '\n')
-	outputfile.write('\end{deluxetable}' + '\n') 
+	outputfile.write('\end{deluxetable}' + '\n')
 	outputfile.write('\end{document}')
 	outputfile.close()
 
