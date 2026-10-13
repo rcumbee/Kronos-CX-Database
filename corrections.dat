@@ -1,6 +1,23 @@
 # corrections.dat -- corrections applied to this Kronos v3 database (newest first).
 # Each entry: date, what changed and why, source, files.
 
+2026-10-13  Kronos v3.4 (working): radrathe.dat added for Ne8+, Mg8+, Mg9+, Mg10+ (H, He)
+----------------------------------------------------------------------------------------------------
+These folders (added in v3.3 with D. Lyons' data) had cross sections only. Added the (2J+1)-weighted LS-term radrathe.dat from
+AUTOSTRUCTURE ICR runs (NIST-corrected + quantum defect, n <= 20): Ne8+, Mg10+ from the cxdatabase GitHub copy; Mg8+, Mg9+ from the
+2026-10-06 plateau-shift runs (Radiative_Input/Autos/General_IC/Runs/Mg8, Mg9), the structure the new Mg8+/Mg9+ MCLZ files use.
+Checks: 0 E1 selection-rule violations in the J-resolved companions; every capture term of each folder's MCLZ file is a level in
+its radrathe.dat. Fe8+, Fe9+ still without radrathe (structure runs pending).
+List: Working/Theory/Kronos_v3_review/kronos_v34_nonbare_radrathe_added_20261013.txt.
+
+2026-10-13  Kronos v3.4 (working): radrathe.dat added to every bare-ion folder (211)
+----------------------------------------------------------------------------------------------------
+The Kronos v3 code computed hydrogenic rates itself, so bare-ion folders had no radrathe.dat; the Python Kronos needs one in every
+folder. Copied from the cxdatabase GitHub copy (same target folder; another target of the same ion where that folder had none): the
+H-like product radrathe.dat from the ICR AUTOSTRUCTURE runs (n <= 20-25, J-weighted LS terms). C6+: the n <= 25 file everywhere (the
+GitHub C6+ + H2 folder still has an older n <= 20 version). Every file reaches at least the top n of its folder's cross sections.
+List: Working/Theory/Kronos_v3_review/kronos_v34_bare_radrathe_added_20261013.txt.
+
 2026-10-13  Kronos v3.4 (working): header text fixes (data unchanged)
 ----------------------------------------------------------------------------------------------------
 Reaction lines that named only the first atom of a molecular target (e.g. 'S^16+ + CO -> S^15+ + CO^+' in s16+co2_sec_mclz_nres.cs;
