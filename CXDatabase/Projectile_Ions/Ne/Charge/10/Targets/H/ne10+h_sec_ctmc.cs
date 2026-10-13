@@ -2,7 +2,7 @@
 # SEC cross sections, nl state-selective
 # Ne^10+ + H -> Ne^(9)+ + H+ 
 # Method=CTMC 
-# Cumbee, R. S. et. al, MNARAS 458(4), 3554-3560 (2016); doi: https://doi.org/10.1093/mnras/stw527
+# Cumbee, R. S. et. al, MNRAS 458(4), 3554-3560 (2016); doi: https://doi.org/10.1093/mnras/stw527
 # ------------------------------------------------
 # Energy    Cross sections (10^-16 cm^2) n,l
 # (eV/u)	1s(2S)	2s(2S)	2p(2P)	3s(2S)	3p(2P)	3d(2D)	4s(2S)	4p(2P)	4d(2D)	4f(2F)	5s(2S)	5p(2P)	5d(2D)	5f(2F)	5g(2G)	6s(2S)	6p(2P)	6d(2D)	6f(2F)	6g(2G)	6h(2H)	7s(2S)	7p(2P)	7d(2D)	7f(2F)	7g(2G)	7h(2H)	7i(2I)	8s(2S)	8p(2P)	8d(2D)	8f(2F)	8g(2G)	8h(2H)	8i(2I)	8k(2K)	9s(2S)	9p(2P)	9d(2D)	9f(2F)	9g(2G)	9h(2H)	9i(2I)	9k(2K)	9l(2L)	10s(2S)	10p(2P)	10d(2D)	10f(2F)	10g(2G)	10h(2H)	10i(2I)	10k(2K)	10l(2L)	10m(2M)	11s(2S)	11p(2P)	11d(2D)	11f(2F)	11g(2G)	11h(2H)	11i(2I)	11k(2K)	11l(2L)	11m(2M)	11n(2N)	12s(2S)	12p(2P)	12d(2D)	12f(2F)	12g(2G)	12h(2H)	12i(2I)	12k(2K)	12l(2L)	12m(2M)	12n(2N)	12o(2O)	13s(2S)	13p(2P)	13d(2D)	13f(2F)	13g(2G)	13h(2H)	13i(2I)	13k(2K)	13l(2L)	13m(2M)	13n(2N)	13o(2O)	13q(2Q)	14s(2S)	14p(2P)	14d(2D)	14f(2F)	14g(2G)	14h(2H)	14i(2I)	14k(2K)	14l(2L)	14m(2M)	14n(2N)	14o(2O)	14q(2Q)	14r(2R)	15s(2S)	15p(2P)	15d(2D)	15f(2F)	15g(2G)	15h(2H)	15i(2I)	15k(2K)	15l(2L)	15m(2M)	15n(2N)	15o(2O)	15q(2Q)	15r(2R)	15t(2T)	Total

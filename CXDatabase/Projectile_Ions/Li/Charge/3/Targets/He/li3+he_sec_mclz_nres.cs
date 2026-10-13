@@ -1,8 +1,8 @@
-# Magic number=22112014, 22 November 2014, PDM
+# Magic number=21062024, 21 June 2024, PCS
 # Single electron capture cross sections, n state-selective
 # Li^3+ + He -> Li^2+ + He^+
 # Method=MCLZ
-# Patrick Mullen et al. 2014, to be submitted
+# P. C. Stancil et al. 2024, to be submitted
 # ----------------------------------------------------------------------------
 # Energy		Cross sections (10^-16 cm^2)
 # (eV/u)       	n=2           	n=1           	Total

@@ -2,7 +2,7 @@
 # Single electron capture cross sections, nl state-selective
 # C^5+ + H2O -> C^4+ + H2O^+
 # Method=MCLZ
-# Patrick Mullen et al. 2015, to be submitted
+# P. D. Mullen et al 2017 ApJ 844 7; DOI 10.3847/1538-4357/aa7752
 # ----------------------------------------------------------------------------
 # Energy		Cross sections (10^-16 cm^2)
 # (eV/u)       	5p(1P)        	5d(1D)        	5g(1G)        	5f(1F)        	5d(3D)        	5p(3P)        	5s(1S)        	5s(3S)        	4p(1P)        	4d(1D)        	4f(3F)        	4f(1F)        	4d(3D)        	4p(3P)        	4s(1S)        	4s(3S)        	3p(1P)        	3d(1D)        	3d(3D)        	3p(3P)        	3s(1S)        	3s(3S)        	2p(1P)        	2p(3P)        	2s(1S)        	2s(3S)        	1s(1S)        	Total

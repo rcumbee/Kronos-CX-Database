@@ -1,6 +1,6 @@
 # Magic number=20092015, 20 September 2015, DAL
 # Single electron capture cross sections, n state-selective
-# Fe^8+ + N -> Fe^7+ + N^+
+# Fe^8+ + N2 -> Fe^7+ + N2^+
 # Method=MCLZ
 # D. Lyons 2019, PhD dissertation, University of Georgia (Single Electron Capture from Atomic and Molecular Collisions Using Advanced Theoretical Methods)
 # ----------------------------------------------------------------------------

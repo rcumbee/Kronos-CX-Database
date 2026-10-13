@@ -1,7 +1,7 @@
 # Single electron capture (SEC) cross sections, nl state-selective, TC-BGM (response model)
 # Ne^10+ + He -> Ne^9+ + He^+
 # From CX_Literature theory_cross_sections.csv (leung2015, Table II of the paper), 4.54 keV/u (933 km/s)
-# Prepared 2026-09-24 (staging_20260924); net-capture and no-response values are in the CSV
+# Method=TC-BGM; Prepared 2026-09-24 (staging_20260924); net-capture and no-response values are in the CSV
 # A. C. K. Leung and T. Kirchner, Phys. Rev. A 93, 052710 (2016); DOI 10.1103/PhysRevA.93.052710
 # ----------------------------------------------------------------------------
 # Energy   Cross sections (10^-16 cm^2)

@@ -2,7 +2,7 @@
 # Single electron capture cross sections, nl state-selective
 # O^7+ + O -> O^6+ + O^+
 # Method=MCLZ
-# Patrick Mullen et al. 2016, to be submitted
+# P. D. Mullen et al 2017 ApJ 844 7; DOI 10.3847/1538-4357/aa7752
 # ----------------------------------------------------------------------------
 # Energy		Cross sections (10^-16 cm^2)
 # (eV/u)	6s(1S)      	5s(1S)      	4s(1S)      	3s(1S)      	2s(1S)      	1s(1S)      	4p(1P)      	7i(1I)      	6g(1G)      	5g(1G)      	6f(1F)      	6d(1D)      	2p(1P)      	3d(1D)      	3p(1P)      	6h(1H)      	7f(1F)      	7g(1G)      	5d(1D)      	7d(1D)      	6p(1P)      	4f(1F)      	5f(1F)      	4d(1D)      	5p(1P)      	7h(1H)      	4f(3F)      	3d(3D)      	2s(3S)      	5s(3S)      	6g(3G)      	5f(3F)      	6h(3H)      	3p(3P)      	5d(3D)      	6p(3P)      	3s(3S)      	4p(3P)      	7s(3S)      	7p(3P)      	6d(3D)      	2p(3P)      	5p(3P)      	6s(3S)      	5g(3G)      	4d(3D)      	4s(3S)      	6f(3F)      	Total

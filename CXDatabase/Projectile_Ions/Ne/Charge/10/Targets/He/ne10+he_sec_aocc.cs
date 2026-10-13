@@ -1,7 +1,7 @@
 # Single electron capture (SEC) cross sections, nl state-selective, two-center AOCC
 # Ne^10+ + He -> Ne^9+ + He^+
 # Table IV of the paper (10^-16 cm^2), 4.54 keV/u; checked against the Working file (same values to 7g)
-# Prepared 2026-09-24 (staging_20260924)
+# Method=AOCC; Prepared 2026-09-24 (staging_20260924)
 # L. Liu, J. G. Wang, and R. K. Janev, Phys. Rev. A 89, 012710 (2014); DOI 10.1103/PhysRevA.89.012710
 # ----------------------------------------------------------------------------
 # Energy   Cross sections (10^-16 cm^2)

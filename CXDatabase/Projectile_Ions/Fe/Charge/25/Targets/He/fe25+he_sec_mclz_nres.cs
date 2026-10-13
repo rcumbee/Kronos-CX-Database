@@ -2,7 +2,7 @@
 # Single electron capture cross sections, n state-selective
 # Fe^25+ + He -> Fe^24+ + He^+
 # Method=MCLZ
-# Patrick Mullen et al. 2015, to be submitted
+# P. D. Mullen et al 2016 ApJS 224 31; DOI 10.3847/0067-0049/224/2/31
 # ----------------------------------------------------------------------------
 # Energy		Cross sections (10^-16 cm^2)
 # (eV/u)       	n=13          	n=12          	n=11          	n=10          	n=9           	n=8           	n=7           	n=6           	n=5           	Total

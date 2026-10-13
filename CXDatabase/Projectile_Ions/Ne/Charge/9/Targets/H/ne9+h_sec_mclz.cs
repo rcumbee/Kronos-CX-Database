@@ -2,7 +2,7 @@
 # Single electron capture cross sections, nl state-selective
 # Ne^9+ + H -> Ne^8+ + H^+
 # Method=MCLZ
-# Patrick Mullen et al. 2015, to be submitted
+# R. S. Cumbee et al 2018 ApJ 852 7; DOI 10.3847/1538-4357/aa99d8
 # ----------------------------------------------------------------------------
 # Energy		Cross sections (10^-16 cm^2)
 # (eV/u)       	9p(1P)        	9s(1S)        	8p(1P)        	8k(1K)        	8i(1I)        	8h(1H)        	8g(1G)        	8f(1F)        	8d(1D)        	8s(1S)        	7i(1I)        	7h(1H)        	7p(1P)        	7g(1G)        	7f(1F)        	7d(1D)        	7s(1S)        	6f(1F)        	6h(1H)        	6g(1G)        	6d(1D)        	6p(1P)        	6s(1S)        	5g(1G)        	5f(1F)        	5d(1D)        	5p(1P)        	5s(1S)        	4d(1D)        	4f(1F)        	4p(1P)        	4s(1S)        	3d(1D)        	3p(1P)        	3s(1S)        	2p(1P)        	2s(1S)        	1s(1S)        	9d(3D)        	9p(3P)        	9s(3S)        	8k(3K)        	8i(3I)        	8h(3H)        	8g(3G)        	8f(3F)        	8d(3D)        	8p(3P)        	8s(3S)        	7i(3I)        	7h(3H)        	7g(3G)        	7f(3F)        	7d(3D)        	7p(3P)        	7s(3S)        	6d(3D)        	6h(3H)        	6g(3G)        	6f(3F)        	6p(3P)        	6s(3S)        	5g(3G)        	5f(3F)        	5d(3D)        	5p(3P)        	5s(3S)        	4d(3D)        	4f(3F)        	4p(3P)        	4s(3S)        	3d(3D)        	3p(3P)        	3s(3S)        	2p(3P)        	2s(3S)        	Total

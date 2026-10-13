@@ -1,7 +1,7 @@
 # Single electron capture (SEC) cross sections, n state-selective, CDW
 # Ne^10+ + He -> Ne^9+ + He^+
 # From CX_Literature theory_cross_sections.csv (gulyas2002; values from PyCollisionDB), cm^2 -> 1e-16 cm^2
-# Prepared 2026-09-24 (staging_20260924); Total = sum over n = 1-8
+# Method=CDW; Prepared 2026-09-24 (staging_20260924); Total = sum over n = 1-8
 # L. Gulyas and P. D. Fainstein, At. Plasma-Mater. Interact. Data Fusion 10, 103 (2002)
 # ----------------------------------------------------------------------------
 # Energy   Cross sections (10^-16 cm^2)

@@ -1,6 +1,85 @@
 # corrections.dat -- corrections applied to this Kronos v3 database (newest first).
 # Each entry: date, what changed and why, source, files.
 
+2026-10-13  Kronos v3.4 (working): header text fixes (data unchanged)
+----------------------------------------------------------------------------------------------------
+Reaction lines that named only the first atom of a molecular target (e.g. 'S^16+ + CO -> S^15+ + CO^+' in s16+co2_sec_mclz_nres.cs;
+CO2 -> CO, H2 and H2O -> H, N2 -> N) now give the full target: 116 n-resolved files. Ne10+ + He AOCC, CDW, TC-BGM: 'Method=' added
+on line 4. O8+ + H RCMD header corrected by the user (ion on line 2, citation moved to line 5). Archive
+Working/Theory/Kronos_v3_review/kronos_v3_before_reaction_lines_20261013-130105.tgz; script fix_v34_reaction_lines_20261013.py.
+
+2026-10-13  Ne10+ + H, He: Lyons reference added (user)
+----------------------------------------------------------------------------------------------------
+ne10+h_sec_mclz_nres.cs, ne10+he_sec_mclz_nres.cs line 5: R. S. Cumbee et al 2014 ApJL 787 L31 + D. Lyons et al 2017 ApJS 232 27.
+
+2026-10-13  Kronos v3.4 (working): Ne10+ + He n-resolved (Lyons); Mg9+ + H new MCLZ + Lyons n-resolved
+----------------------------------------------------------------------------------------------------
+Ne10+ + He: ne10+he_sec_mclz_nres.cs replaced by D. Lyons' MCLZ (ne10+he_sec_mclz_lowe.cs) summed over l (n = 1-6; same n sums
+as his _stat file), Total column added, reference R. S. Cumbee et al 2014 ApJL 787 L31 (user). Archive
+Kronos_v3_review/kronos_v3_ne10he_before_lyons_nres_20261013.tgz; script v34_ne10h_lyons/build_ne10he_nres_20261013.py.
+Mg9+ + H (user): mg9+h_sec_mclz.cs = the new MCLZ calculation (nlS-resolved; AUTOS ICR levels with plateau shift, Wigner-Witmer
+singlet + triplet; R. S. Cumbee et al. 2026, to be submitted) -- the file Kronos uses; mg9.nist.in = its level list.
+mg9+h_sec_mclz_nres.cs = D. Lyons' n-resolved data (Lyons et al 2017 ApJS 232 27), kept for reference (Kronos skips *nres* files
+for non-bare ions). Lyons' nl file and level list are in the archive Kronos_v3_review/kronos_v3_mg9h_before_icr_20261013.tgz.
+Mg10+ + H: Lyons' files kept (user: maybe keep Lyons; not final).
+
+2026-10-13  Kronos v3.4 (working): Ne10+ + H MCLZ = D. Lyons' calculation, n-resolved
+----------------------------------------------------------------------------------------------------
+ne10+h_sec_mclz_nres.cs replaced (user): D. Lyons' MCLZ nl file (ne10+h_sec_mclz_lowe.cs, low-energy l-distribution, n = 3-8,
+1e-3 - 2.3e5 eV/u) summed over l to n-resolved (the n totals do not depend on the l model; his _stat file gives the same sums),
+named without _lowe; Total column added. Reference: R. S. Cumbee et al 2014 ApJL 787 L31. Agrees with the new MCLZ run within
+~10 % over 1-1e4 eV/u. Old file archived in Kronos_v3_review/kronos_v3_ne10h_before_lyons_nres_20261013.tgz; script
+Kronos_v3_review/v34_ne10h_lyons/build_ne10h_nres_20261013.py.
+
+2026-10-13  Kronos v3.4 (working): header references updated; Li3+ + H MCLZ removed
+----------------------------------------------------------------------------------------------------
+Line 5 (citation) only; data unchanged (user-supplied references, DOIs checked with CrossRef):
+  Fe25+ + CO, H, H2, H2O, He, N2 (11 files; were 'Patrick Mullen et al. 2015, to be submitted'):
+    P. D. Mullen et al 2016 ApJS 224 31; DOI 10.3847/0067-0049/224/2/31
+  Ne10+ + H, He (were 'Patrick Mullen et al. 2015, to be submitted'): R. S. Cumbee et al 2014 ApJL 787 L31; DOI 10.1088/2041-8205/787/2/L31
+  Files taken from the Published copy that said 'P. C. Stancil et al. 2023/2024, to be submitted' (C6+, N7+, O8+, Na11+, Al13+,
+  Si14+ + seven targets; Ne10+ + CO, CO2, H2, H2O, N2): H, He, H2 targets -> R. S. Cumbee et al 2018 ApJ 852 7 (19 files);
+  other targets -> P. D. Mullen et al 2017 ApJ 844 7 (28 files).
+  Clean-up: 'RCumbee et al. 2026' -> 'R. S. Cumbee et al. 2026' (41); 'MNARAS' -> 'MNRAS' (2); Janev et al. 1993 authors added (1).
+Li3+ + H: li3+h_sec_mclz_nres.cs removed (MCLZ does not apply: Li2+ n = 3 is resonant with H(1s), no curve crossing; the file
+was ~0); li3+h_sec_mocc.cs (Harel, Jouin & Pons 1998) is the data for this system.
+Archive Kronos_v3_review/kronos_v3_before_citations_20261013-124050.tgz; log kronos_v34_citations_applied_20261013-124050.txt;
+script update_v34_citations_20261013.py.
+
+2026-10-13  Kronos v3.4 (working): MCLZ cross sections replaced (283 systems)
+----------------------------------------------------------------------------------------------------
+MCLZ files chosen in the v3.4 review (Working/Theory/Kronos_v3_review: kronos_v3.3_selection.pdf/.csv, user decisions). Rule: the
+v3.3 file is kept when it agrees with our new MCLZ run (ICR structure: AUTOS ICR levels, NIST-corrected + quantum defect + plateau,
+Wigner-Witmer channels) within 15 % over 1-1e4 eV/u, else the cxdatabase GitHub/Published version if it agrees, else the new run;
+user decisions override. Bare ions: the 2014-2016 MCLZ files had an error in the rotational coupling (alpha1 formula in the C
+lzmcro; corrected 2026-08); replacements are P. C. Stancil's recalculations (Fortran code, unaffected) or new runs. H-like
+projectiles (He-like products): improved level energies. Old v3.3 MCLZ files removed (archive
+Kronos_v3_review/kronos_v3_before_v34_selection_20261013-123139.tgz); each changed folder's .nist.in is now the level list of the
+kept calculation. Bare-ion files are n-resolved, named *_sec_mclz_nres.cs (one MCLZ file per folder, as Kronos v3 requires).
+Held (unchanged, decision pending): Ne10+ + H, He; Li3+ + H MCLZ; Mg9+ + H; Mg10+ + H.
+  From the cxdatabase GitHub copy (153): Li3+ CO/CO2/H2/H2O/HE/N2; Be4+ CO/CO2/H/H2/H2O/HE/N2; B5+ CO/CO2/H/H2/H2O/HE/N2; N6+
+    CO/CO2/H2/H2O/N2; F9+ CO/CO2/H/H2/H2O/HE/N2; Ne9+ H2/HE/N2; Na10+ HE; Mg12+ CO/CO2/H/H2/H2O/HE/N2; P15+
+    CO/CO2/H/H2/H2O/HE/N2; S16+ CO/CO2/H/H2/H2O/HE/N2; Cl17+ CO/CO2/H/H2/H2O/HE/N2; Ar18+ CO/CO2/H/H2/H2O/HE/N2; K19+
+    CO/CO2/H/H2/H2O/HE/N2; Ca20+ CO/CO2/H/H2/H2O/HE/N2; Sc21+ CO/CO2/H/H2/H2O/HE/N2; Ti22+ CO/CO2/H/H2/H2O/HE/N2; V23+
+    CO/CO2/H/H2/H2O/HE/N2; Cr24+ CO/CO2/H/H2/H2O/N2; Mn25+ CO/H/H2/H2O/HE/N2; Fe26+ CO/CO2/H/H2/H2O/HE/N2; Co27+
+    CO/CO2/H/H2/H2O/HE/N2; Ni28+ CO/CO2/H/H2/H2O/HE/N2; Cu29+ CO/CO2/H/H2/H2O/HE/N2; Zn30+ CO/CO2/H/H2/H2O/HE/N2
+  From the cxdatabase Published copy (89): C5+ CO/CO2/H/H2/H2O/HE/N2/O/OH; C6+ CO/CO2/H/H2/H2O/HE/N2; N6+ HE; N7+
+    CO/CO2/H/H2/H2O/HE/N2; O7+ CO/CO2/H2/HE/N2/O/OH; O8+ CO/CO2/H/H2/H2O/HE/N2; Ne9+ H; Ne10+ CO/CO2/H2/H2O/N2; Na10+ H; Na11+
+    CO/CO2/H/H2/H2O/HE/N2; Mg11+ CO/CO2/H/H2/H2O/HE/N2/O/OH; Al12+ CO/CO2/H/H2/H2O/HE/N2/O/OH; Al13+ CO/CO2/H/H2/H2O/HE/N2;
+    Si13+ CO/CO2/H/HE/O; Si14+ CO/CO2/H/H2/H2O/HE/N2
+  From the new MCLZ calculation (R. S. Cumbee et al. 2026) (41): C6+ O/OH; N6+ H/O/OH; N7+ O/OH; O7+ H/H2O; O8+ O/OH; Ne9+
+    CO/CO2/H2O/O/OH; Ne10+ O/OH; Na10+ CO/CO2/H2/H2O/N2/O/OH; Na11+ O/OH; Mg8+ H/HE; Mg9+ HE; Mg12+ O/OH; Al13+ O/OH; Si13+
+    H2/H2O/N2/OH; Si14+ O/OH; Cr24+ HE
+Script: Kronos_v3_review/apply_v34_selection_20261013.py; per-folder log kronos_v34_selection_applied_20261013-123139.txt.
+
+2026-10-13  Kronos v3.4 (working): Li3+ + H MOCC added
+----------------------------------------------------------------------------------------------------
+li3+h_sec_mocc.cs: Harel, Jouin & Pons 1998, ADNDT 68, 279, Table III (semiclassical MOCC), nl-resolved n = 2-5, 62.5-25000 eV/u,
+1e-16 cm^2; Total = sum over n = 2-5 (= the paper's Table A); values checked against the page images. Same file as the cxdatabase
+GitHub copy (added there the same day). The Li3+ + H MCLZ file here (li3+h_sec_mclz_nres.cs, Mullen 2014) is effectively zero:
+Li2+ n = 3 is resonant with H(1s), so MCLZ does not apply to this system. Files: CXDatabase/Projectile_Ions/Li/Charge/3/Targets/H/
+li3+h_sec_mocc.cs (new).
+
 2026-10-06  Kronos v3.3: published data added that v3.2 did not contain
 ----------------------------------------------------------------------------------------------------
 All new files are in the usual CXDatabase/Projectile_Ions/<El>/Charge/<q>/Targets/<Target>/ folders. Systems whose product ion has
