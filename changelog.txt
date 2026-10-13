@@ -1,7 +1,9 @@
 Kronos v3.4 (work in progress)
 
 10/13/26 RSC:
-	Cross sections (database only; code unchanged from v3.1). Details and file lists in corrections.dat.
+	Code: Kronos_GUI v1 (kronos_gui.py, Python 3; spectrum, line list, Qt window) replaces the v3.1 code (kronos.py, src/,
+	README/Kronos.pdf; still in the tags v1-v3.3). Default method: the first that covers the requested energy.
+	Cross sections: details and file lists in corrections.dat.
 	Replaced:
 		-Bare-ion MCLZ cross sections, due to an error in the rotational coupling of the
 		 2014-2016 calculations; all targets (Li3+ + H: see below) of:
