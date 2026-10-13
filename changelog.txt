@@ -1,3 +1,49 @@
+Kronos v3.4 (work in progress)
+
+10/13/26 RSC:
+	Cross sections (database only; code unchanged from v3.1). Details and file lists in corrections.dat.
+	Replaced:
+		-Bare-ion MCLZ cross sections, due to an error in the rotational coupling of the
+		 2014-2016 calculations; all targets (Li3+ + H: see below) of:
+			Li3+, Be4+, B5+, C6+, N7+, O8+, F9+, Ne10+, Na11+, Mg12+, Al13+, Si14+,
+			P15+, S16+, Cl17+, Ar18+, K19+, Ca20+, Sc21+, Ti22+, V23+, Cr24+,
+			Mn25+, Fe26+, Co27+, Ni28+, Cu29+, Zn30+
+		-Ne10+ + H, He: D. Lyons' MCLZ, summed over l to n-resolved
+		-H-like projectiles (He-like products), due to improved level energies:
+			N6+:  CO, CO2, H, H2, H2O, N2, O, OH
+			O7+:  H, H2O
+			Ne9+: CO, CO2, H2, H2O, He, N2, O, OH
+			Na10+: CO, CO2, H2, H2O, He, N2, O, OH
+			Si13+: H2, H2O, N2, OH
+		-Mg8+ + H, He; Mg9+ + He: new MCLZ calculations
+		-Mg9+ + H: new MCLZ calculation; D. Lyons' n-resolved data kept as *_nres.cs
+		-Level lists (*.nist.in) now match the kept calculation in every changed folder
+	Li3+ + H:
+		-MCLZ removed: Li2+ n = 3 is bound by 13.6 eV, the same as H(1s), so capture into
+		 n = 3 is resonant and there is no curve crossing (MCLZ gave ~0)
+		-Added MOCC cross sections (Harel, Jouin & Pons 1998, ADNDT 68, 279)
+	Updated:
+		-References in the file headers (line 5); data unchanged
+		-Reaction lines now name the full molecular target (CO2, H2, H2O, N2)
+	Still open: Mg10+ + H; no radrathe.dat yet for Ne8+, Mg8-10+, Fe8+, Fe9+
+
+Kronos v3.3
+
+10/6/26 RSC:
+	Added published data that v3.2 did not contain:
+		-D. Lyons' MCLZ: Mg8+, Mg9+, Mg10+, Ne8+ + H, He (Lyons et al. 2017, ApJS 232, 27);
+		 Fe8+, Fe9+ + H, He, H2, H2O, CO, CO2, N2 (D. Lyons 2019, PhD dissertation)
+		-Mullen et al. 2017 (ApJ 844, 7) bare-ion MCLZ with O and OH, n-resolved
+		-Published non-MCLZ files: Ne10+ + He AOCC, TC-BGM, CDW; O8+ + H QMOCC
+	Systems without a radrathe.dat (Mg8-10+, Ne8+, Fe8+, Fe9+) carry cross sections only
+
+Kronos v3.2
+
+10/6/26 RSC:
+	-Non-MCLZ files replaced by the corrected versions from the cxdatabase repository
+	-C5+ + H MOCC removed (duplicate of the QMOCC data)
+	-Added corrections.dat (log of all database corrections)
+
 Kronos v3.1
 
 5/3/17 PDM:
