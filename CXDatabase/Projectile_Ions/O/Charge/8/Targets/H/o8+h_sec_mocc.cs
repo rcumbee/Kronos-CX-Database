@@ -1,7 +1,7 @@
 # Magic number=08092026, 08 September 2026, RSC
 # Single electron capture cross sections, nl state-selective
 # O^8+ + H -> O^7+ + H^+
-# Method=QMOCC
+# Method=MOCC
 # C. Harel, H. Jouin, and B. Pons, ADNDT 68, 279 (1998)
 # ----------------------------------------------------------------------------
 # Energy		Cross sections (10^-16 cm^2)
